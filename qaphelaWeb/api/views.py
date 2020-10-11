@@ -4,6 +4,14 @@ from rest_framework.permissions import AllowAny
 from rest_framework import generics
 
 
+class User(generics.RetrieveUpdateAPIView):
+    serializer_class = serializers.QaphelaUserSerializer
+    # authentication_class = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    queryset = models.QaphelaUser.objects.all()
+
+
 class Abuser(generics.ListCreateAPIView):
     # authentication_class = (JSONWebTokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
@@ -28,7 +36,9 @@ class Abusers(generics.ListCreateAPIView):
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
     serializer_class = serializers.AbuserSerializer
-    queryset = models.Abuser.objects.all()
+
+    def get_queryset(self):
+        return models.Abuser.objects.all()
 
 
 class Cases(generics.ListCreateAPIView):

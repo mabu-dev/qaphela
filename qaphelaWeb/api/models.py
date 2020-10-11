@@ -88,3 +88,4 @@ class Case(models.Model):
     case_status = models.CharField(max_length=15, choices=CASE_STATUS)
     settlement_type = models.CharField(
         max_length=15, choices=SETTLEMENT_TYPE, null=True)
+    police_case_number = models.CharField(max_length=100, null=True)

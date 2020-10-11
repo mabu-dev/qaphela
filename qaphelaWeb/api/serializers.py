@@ -92,6 +92,7 @@ class QaphelaUserSerializer(DynamicModelSerializer):
 
 class AbuserSerializer(DynamicModelSerializer):
     contact_details = ContactDetailsSerializer(required=False)
+    social_profiles = SocialProfilesSerializer(required=False)
 
     class Meta:
         model = models.Abuser
