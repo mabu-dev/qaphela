@@ -92,7 +92,7 @@ class _LoginState extends State<Login> {
                       "Login",
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.blueAccent,
+                        color: Colors.greenAccent,
                       ),
                     ),
                   ),
@@ -109,7 +109,7 @@ class _LoginState extends State<Login> {
                       "Register",
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.blueAccent,
+                        color: Colors.greenAccent,
                       ),
                     ),
                   ),
@@ -127,7 +127,7 @@ class _LoginState extends State<Login> {
                         "Skip   ",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -165,7 +165,7 @@ class _LoginState extends State<Login> {
                                       isPassword: true),
                                   Material(
                                     elevation: 5,
-                                    color: Colors.lightBlue,
+                                    color: Colors.greenAccent,
                                     borderRadius: BorderRadius.circular(12.0),
                                     child: MaterialButton(
                                       onPressed: () {
@@ -235,7 +235,7 @@ class _LoginState extends State<Login> {
 
                                         Material(
                                           elevation: 5,
-                                          color: Colors.lightBlue,
+                                          color: Colors.greenAccent,
                                           borderRadius:
                                               BorderRadius.circular(12.0),
                                           child: MaterialButton(

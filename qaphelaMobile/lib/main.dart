@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qaphelaMobile/views/case-check.dart';
 import 'package:qaphelaMobile/views/landing.dart';
 import 'package:qaphelaMobile/views/login.dart';
 import 'package:qaphelaMobile/views/menu-page.dart';
@@ -14,6 +15,7 @@ var routes = <String, WidgetBuilder>{
   '/': (context) => WelcomeScreen(),
   '/fetchMe': (context) => LandingScreen(),
   '/menu': (context) => MenuScreen(),
+  '/caseCheck': (context) => CaseCheckScreen(),
   
 };
 class MyApp extends StatelessWidget {

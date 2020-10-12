@@ -93,7 +93,7 @@ class _WelcomeScreen extends State<WelcomeScreen> {
             Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  color: Colors.white30,
+                  color: Colors.orangeAccent[100],
                   margin: EdgeInsets.only(top: 50.0),
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: Row(
