@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class CaseDetailsEntry extends StatelessWidget {
   final String text, title;
-  const CaseDetailsEntry({Key key, this.text, this.title}) : super(key: key);
+  final bool edit;
+  const CaseDetailsEntry({Key key, this.text, this.title, this.edit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +21,23 @@ class CaseDetailsEntry extends StatelessWidget {
             title,
             style: TextStyle(fontSize: 18, color: Colors.black45, fontWeight: FontWeight.w400)
           ),
-          Text(
+          edit == true?Text(
             text,
             style: TextStyle(fontSize: 16, color: Colors.black),
-          )
+          ):TextField(
+            controller: TextEditingController(text:text),
+              onChanged: (value) => {
+                    // setState(() {
+                    //   auth[id] = value;
+                    // }),
+                    print('TextField onChanged: $text'),
+                  },
+              // obscureText: isPassword,
+              decoration: InputDecoration(
+                  // hintText: hint,
+                  border: InputBorder.none,
+                  fillColor: Color(0xfff3f3f4),
+                  filled: true))
       ]),
     );
   }
