@@ -16,6 +16,7 @@ var routes = <String, WidgetBuilder>{
   '/fetchMe': (context) => LandingScreen(),
   '/menu': (context) => MenuScreen(),
   '/caseCheck': (context) => CaseCheckScreen(),
+  '/caseDetails': (context) => CaseCheckScreen(),
   
 };
 class MyApp extends StatelessWidget {

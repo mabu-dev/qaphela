@@ -4,7 +4,7 @@ import 'contactDetails.dart';
 
 class Perpetrators {
   String fullNames;
-  Null imageurl;
+  String imageurl;
   String workplaceDetails;
   ContactDetails contactDetails;
   SocialProfiles socialProfiles;

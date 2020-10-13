@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:http/http.dart' as http;
 
+import 'case-details.dart';
+
 class CaseCheckScreen extends StatefulWidget {
   @override
   _CaseCheckScreen createState() => _CaseCheckScreen();
@@ -17,8 +19,10 @@ Future<List<CheckCase>> doStuff() async {
       headers: _setHeaders());
 
   if (res.body != null) {
-    List<CheckCase> stringList = jsonDecode(res.body);
-    return stringList;
+    List<dynamic> stringList = json.decode(res.body);
+    //  List<CheckCase>  r = stringList.map((i) => CheckCase.fromJson(i)).toList();
+
+    return stringList.map((i) => CheckCase.fromJson(i)).toList();
   } else {
     throw new Exception(res);
   }
@@ -28,6 +32,7 @@ Future<List<CheckCase>> doStuff() async {
 class _CaseCheckScreen extends State<CaseCheckScreen> {
   String searcString;
   List<CheckCase> cases = [];
+
   void setCases() async {
     List<CheckCase> returnCases = await doStuff();
 
@@ -88,26 +93,34 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
               "Search", 'search', 'search case by name or id', context),
         ),
         body: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                  leading: Icon(Icons.list),
-                  trailing: Text(
-                    "GFG",
-                    style: TextStyle(color: Colors.green, fontSize: 15),
-                  ),
-                  title: Text("Case number $index"));
+            itemCount: cases.length,
+            itemBuilder: (BuildContext listContext, int index) {
+              return cases.length != 0
+                  ? ListTile(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return CaseDetails(checkCase: cases[index]);
+                        }));
+
+                      },
+                      trailing: Text(
+                        cases[index].when,
+                        style: TextStyle(color: Colors.green, fontSize: 15),
+                      ),
+                      title: Text(cases[index].title))
+                  : ListTile(
+                      onTap: () {
+                        print('clicked Case number $index');
+                      },
+                      leading: Icon(Icons.list),
+                      trailing: Text(
+                        "GFG",
+                        style: TextStyle(color: Colors.green, fontSize: 15),
+                      ),
+                      title: Text("Case List is empty "));
             })
-        // floatingActionButton: FloatingActionButton.extended(
-        //   onPressed: _goToTheLake,
-        //   label: Text('To the lake!'),
-        //   icon: Icon(Icons.directions_boat),
-        // )
         );
   }
 
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
+
 }

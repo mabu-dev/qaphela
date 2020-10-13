@@ -1,11 +1,11 @@
 class ContactDetails {
   int id;
   String primaryContactNumber;
-  Null secondaryContactNumber;
-  Null nextOfKinFirstname;
-  Null nextOfKinLastname;
-  Null nextOfKinPrimaryContactNumber;
-  Null nextOfKinSecondaryContactNumber;
+  String secondaryContactNumber;
+  String nextOfKinFirstname;
+  String nextOfKinLastname;
+  String nextOfKinPrimaryContactNumber;
+  String nextOfKinSecondaryContactNumber;
 
   ContactDetails(
       {this.id,
