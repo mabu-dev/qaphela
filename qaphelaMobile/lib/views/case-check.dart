@@ -17,8 +17,13 @@ Future<List<CheckCase>> doStuff() async {
       headers: _setHeaders());
 
   if (res.body != null) {
-    List<CheckCase> stringList = jsonDecode(res.body);
-    return stringList;
+
+    List< dynamic> stringList  = json.decode(res.body);
+    print('doStuff stringList: ${stringList.toString()}');
+    //  List<CheckCase>  r = stringList.map((i) => CheckCase.fromJson(i)).toList();
+
+     return stringList.map((i) => CheckCase.fromJson(i)).toList();
+
   } else {
     throw new Exception(res);
   }
@@ -29,7 +34,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
   String searcString;
   List<CheckCase> cases = [];
   void setCases() async {
-    List<CheckCase> returnCases = await doStuff();
+    List< CheckCase> returnCases = await doStuff();
 
     print('setCases returnCases: ${returnCases.toString()}');
     setState(() {
@@ -91,6 +96,9 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
             itemCount: 5,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
+                onTap: (){
+                  print('clicked Case number $index');
+                },
                   leading: Icon(Icons.list),
                   trailing: Text(
                     "GFG",

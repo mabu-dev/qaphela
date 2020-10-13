@@ -7,7 +7,7 @@ import 'contactDetails.dart';
 class Reporter {
   User user;
   String userType;
-  Null imageurl;
+  String imageurl;
   bool isDispatchUser;
   SocialProfiles socialProfiles;
   ContactDetails contactDetails;
