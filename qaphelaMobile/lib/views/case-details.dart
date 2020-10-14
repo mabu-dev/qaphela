@@ -31,13 +31,70 @@ class _CaseDetailsState extends State<CaseDetails> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: Icon(edit == false ? Icons.edit : Icons.cancel),
               iconSize: MediaQuery.of(context).size.width * 0.08,
               color: Colors.white,
               onPressed: () {
-                setState(() {
-                  edit = !edit;
-                });
+                // setState(() {
+                //   edit = !edit;
+                // });
+                edit == false
+                    ? showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Alert Message"),
+                            // Retrieve the text which the user has entered by
+                            // using the TextEditingController.
+                            content: Text(
+                                'Are you sure you want to edit this case?'),
+                            actions: <Widget>[
+                              new FlatButton(
+                                  child: new Text('Yes'),
+                                  onPressed: () {
+                                    setState(() {
+                                      edit = !edit;
+                                    });
+                                    Navigator.of(context).pop();
+                                  }),
+                              new FlatButton(
+                                child: new Text('NO'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          );
+                        },
+                      )
+                    : showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Alert Message"),
+                            // Retrieve the text which the user has entered by
+                            // using the TextEditingController.
+                            content: Text(
+                                'You will lose all changes you have made, do you want to continue?'),
+                            actions: <Widget>[
+                              new FlatButton(
+                                  child: new Text('Yes'),
+                                  onPressed: () {
+                                    setState(() {
+                                      edit = !edit;
+                                    });
+                                    Navigator.of(context).pop();
+                                  }),
+                              new FlatButton(
+                                child: new Text('NO'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          );
+                        },
+                      );
                 // Navigator.pop(context);
                 // sprint('');
               },
@@ -53,7 +110,10 @@ class _CaseDetailsState extends State<CaseDetails> {
         body: Container(
           padding: EdgeInsets.fromLTRB(4, 12, 4, 0),
           color: Colors.white,
-          child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              
+              SingleChildScrollView(
                   child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,33 +126,53 @@ class _CaseDetailsState extends State<CaseDetails> {
                           fontWeight: FontWeight.w400),
                     ),
                     CaseDetailsEntry(
-                        text: widget.checkCase.policeCaseNumber,
-                        title: "Police CaseNumber",
-                        edit: edit),
+                      text: widget.checkCase.policeCaseNumber,
+                      title: "Police CaseNumber",
+                      edit: edit,
+                      editable: false,
+                    ),
                     CaseDetailsEntry(
-                        text: widget.checkCase.caseStatus,
-                        title: "Case Status",
-                        edit: edit),
+                      text: widget.checkCase.caseStatus,
+                      title: "Case Status",
+                      edit: edit,
+                      editable: false,
+                    ),
                     CaseDetailsEntry(
-                        text: widget.checkCase.frequency.toString(),
-                        title: "Frequency",
-                        edit: edit),
+                      text: widget.checkCase.frequency.toString(),
+                      title: "Frequency",
+                      edit: edit,
+                      editable: false,
+                    ),
                     CaseDetailsEntry(
-                        text: widget.checkCase.when,
-                        title: "Reported On",
-                        edit: edit),
+                      text: widget.checkCase.when,
+                      title: "Reported On",
+                      edit: edit,
+                      editable: false,
+                    ),
                     CaseDetailsEntry(
-                        text: widget.checkCase.reportType,
-                        title: "Report Type",
-                        edit: edit),
+                      text: widget.checkCase.reportType,
+                      title: "Report Type",
+                      edit: edit,
+                      editable: false,
+                    ),
                     CaseDetailsEntry(
                         text: widget.checkCase.preview,
                         title: "Preview",
                         edit: edit),
-                    
-                  ]
-                  )
-              ),
+                        Padding(padding: EdgeInsets.only(bottom:4)),
+                    Container(
+                        child: edit == true
+                            ? FlatButton(
+                              color: Colors.orangeAccent,
+                                child: new Text('Update Case'),
+                                onPressed: () {
+                                  // Navigator.of(context).pop();
+                                },
+                              )
+                            : null)
+                  ]))
+            ],
+          ),
         ));
   }
 }
