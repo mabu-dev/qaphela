@@ -22,7 +22,6 @@ Future<List<Perpetrators>> doStuff() async {
 
   if (res.body != null) {
     List<dynamic> stringList = json.decode(res.body);
-    //  List<CheckCase>  r = stringList.map((i) => CheckCase.fromJson(i)).toList();
 
     return stringList.map((i) => Perpetrators.fromJson(i)).toList();
   } else {
