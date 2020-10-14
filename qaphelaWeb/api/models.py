@@ -81,7 +81,7 @@ class Case(models.Model):
     preview = models.TextField()
     when = models.DateTimeField()
     perpetrators = models.ForeignKey(Abuser, on_delete=models.CASCADE)
-    reporter = models.OneToOneField(
+    reporter = models.ForeignKey(
         QaphelaUser, on_delete=models.CASCADE)
     frequency = models.IntegerField()
     date_reported = models.DateTimeField(auto_now_add=True)
