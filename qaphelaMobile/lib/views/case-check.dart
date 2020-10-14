@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:http/http.dart' as http;
+import 'package:qaphelaMobile/model/perpetrator.dart';
+import 'package:qaphelaMobile/views/perpetrator-details.dart';
 
 import 'case-details.dart';
 
@@ -11,18 +13,18 @@ class CaseCheckScreen extends StatefulWidget {
   _CaseCheckScreen createState() => _CaseCheckScreen();
 }
 
-Future<List<CheckCase>> doStuff() async {
+Future<List<Perpetrators>> doStuff() async {
   Map<String, String> _setHeaders() => <String, String>{
         'Accept': 'application/json',
       };
-  http.Response res = await http.get('http://192.168.8.106:8000/api/cases/',
+  http.Response res = await http.get('http://192.168.8.106:8000/api/abusers/',
       headers: _setHeaders());
 
   if (res.body != null) {
     List<dynamic> stringList = json.decode(res.body);
     //  List<CheckCase>  r = stringList.map((i) => CheckCase.fromJson(i)).toList();
 
-    return stringList.map((i) => CheckCase.fromJson(i)).toList();
+    return stringList.map((i) => Perpetrators.fromJson(i)).toList();
   } else {
     throw new Exception(res);
   }
@@ -31,10 +33,10 @@ Future<List<CheckCase>> doStuff() async {
 
 class _CaseCheckScreen extends State<CaseCheckScreen> {
   String searcString;
-  List<CheckCase> cases = [];
+  List<Perpetrators> cases = [];
 
   void setCases() async {
-    List<CheckCase> returnCases = await doStuff();
+    List<Perpetrators> returnCases = await doStuff();
 
     print('setCases returnCases: ${returnCases.toString()}');
     setState(() {
@@ -90,24 +92,40 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.greenAccent,
           title: _entryField(
-              "Search", 'search', 'search case by name or id', context),
+              "Search", 'search', 'search abuser by name o Image', context),
         ),
         body: ListView.builder(
             itemCount: cases.length,
             itemBuilder: (BuildContext listContext, int index) {
               return cases.length != 0
-                  ? ListTile(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return CaseDetails(checkCase: cases[index]);
-                        }));
-
-                      },
-                      trailing: Text(
-                        cases[index].when,
-                        style: TextStyle(color: Colors.green, fontSize: 15),
+                  ? Card(
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return PerpetratorDetails(
+                              fullNames: cases[index].fullNames,
+                            );
+                          }));
+                        },
+                        leading: cases[index].imageurl != null
+                            ? Image.network(cases[index].imageurl)
+                            : Icon(
+                                Icons.favorite,
+                                color: Colors.pink,
+                                size: 30,
+                                semanticLabel:
+                                    'Text to announce in accessibility modes',
+                              ),
+                        title: Text(cases[index].fullNames),
+                        subtitle: Text(
+                          cases[index].workplaceDetails,
+                          style: TextStyle(color: Colors.green, fontSize: 12),
+                        ),
+                        isThreeLine: true,
                       ),
-                      title: Text(cases[index].title))
+                      
+                    )
                   : ListTile(
                       onTap: () {
                         print('clicked Case number $index');
@@ -118,9 +136,6 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                         style: TextStyle(color: Colors.green, fontSize: 15),
                       ),
                       title: Text("Case List is empty "));
-            })
-        );
+            }));
   }
-
-
 }
