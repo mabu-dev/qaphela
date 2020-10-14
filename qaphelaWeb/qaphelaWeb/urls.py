@@ -19,8 +19,8 @@ from django.conf.urls import url
 # from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('api.urls')),
+    path('admin/', admin.site.urls),
     path('api/', include('rest_framework.urls')),
 
     # path('api-token-auth/', obtain_jwt_token),
