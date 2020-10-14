@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:qaphelaMobile/model/checkCase.dart';
 
 class MyApi {
-  static final domain = '192.168.8.106';
-  static final baseUrl = "http://$domain:8000";
+  static final domain = '192.168.8.100';
+  static final baseUrl = "http://$domain:8001";
 
 Future<CheckCase> getCase() async {
   http.Response res = await http.get('/api/cases/');
