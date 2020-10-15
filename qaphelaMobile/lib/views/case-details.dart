@@ -112,7 +112,6 @@ class _CaseDetailsState extends State<CaseDetails> {
           color: Colors.white,
           child: Column(
             children: <Widget>[
-              
               SingleChildScrollView(
                   child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -159,17 +158,30 @@ class _CaseDetailsState extends State<CaseDetails> {
                         text: widget.checkCase.preview,
                         title: "Preview",
                         edit: edit),
-                        Padding(padding: EdgeInsets.only(bottom:4)),
-                    Container(
-                        child: edit == true
-                            ? FlatButton(
-                              color: Colors.orangeAccent,
-                                child: new Text('Update Case'),
-                                onPressed: () {
-                                  // Navigator.of(context).pop();
-                                },
-                              )
-                            : null)
+                    Padding(padding: EdgeInsets.only(bottom: 4)),
+                    Material(
+                      elevation: 5,
+                      color: Colors.greenAccent,
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: edit == true
+                          ? MaterialButton(
+                              onPressed: () {
+                                //                  Navigator.push(
+                                //                    context,
+                                //                    MaterialPageRoute(builder: (context) => MyLoginPage()),
+                                //                  );
+                              },
+                              minWidth: 200.0,
+                              height: 8.0,
+                              child: Text(
+                                "Update Case",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12.0),
+                              ),
+                            )
+                          : null,
+                    )
                   ]))
             ],
           ),
