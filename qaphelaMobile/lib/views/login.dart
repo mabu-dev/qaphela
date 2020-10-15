@@ -77,191 +77,193 @@ class _LoginState extends State<Login> {
             height: MediaQuery.of(context).size.height,
             padding: const EdgeInsets.fromLTRB(0.0, 36.0, 0.0, 0),
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: <
-                    Widget>[
-              Row(children: <Widget>[
-                GestureDetector(
-                  onTap: () => _pageViewController.animateToPage(
-                    0,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeIn,
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 8.0),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.greenAccent,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _pageViewController.animateToPage(
-                    1,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeIn,
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 8.0),
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.greenAccent,
-                      ),
-                    ),
-                  ),
-                ),
-                new Expanded(
-                    child: new Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/menu');
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 8.0),
-                      child: Text(
-                        "Skip   ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(bottom:24)),
+                    Row(children: <Widget>[
+                      GestureDetector(
+                        onTap: () => _pageViewController.animateToPage(
+                          0,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeIn,
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 8.0),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.green,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ))
-              ]),
-              new Expanded(
-                child: new Align(
-                    alignment: Alignment.bottomCenter,
-                    
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      padding: EdgeInsets.fromLTRB(2.0,45.0, 2.0,4.0),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.only(topLeft: Radius.circular(45.0),topRight:Radius.circular(45.0))),
-                      child: PageView(
-                          controller: _pageViewController,
-                          physics: new AlwaysScrollableScrollPhysics(),
-                          children: <Widget>[
-                            Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "Login Page",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12.0),
-                                  ),
-                                  _entryField('Name', 'name', 'Kwanele'),
-                                  _entryField('Surname', 'surname', 'Motaung',
-                                      isPassword: true),
-                                  Material(
-                                    elevation: 5,
-                                    color: Colors.greenAccent,
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: MaterialButton(
-                                      onPressed: () {
-                                        //   Navigator.push(
-                                        //     context,
-                                        //     // MaterialPageRoute(builder: (context) => MyLoginPage()),
-                                        //   );
-                                      },
-                                      minWidth: 200.0,
-                                      height: 16.0,
-                                      child: Text(
-                                        "Login",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16.0),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                      GestureDetector(
+                        onTap: () => _pageViewController.animateToPage(
+                          1,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeIn,
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 8.0),
+                          child: Text(
+                            "Register",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ),
+                      new Expanded(
+                          child: new Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(context, '/menu');
+                          },
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(8.0, 2.0, 2.0, 8.0),
+                            child: Text(
+                              "Skip   ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
                               ),
                             ),
-                            Center(
-                                child: ListView(
-                                    shrinkWrap: true,
-                                    padding: EdgeInsets.all(8.0),
-                                    children: <Widget>[
+                          ),
+                        ),
+                      ))
+                    ]),
+                    new Expanded(
+                      child: new Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            padding: EdgeInsets.fromLTRB(2.0, 45.0, 2.0, 4.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(45.0),
+                                    topRight: Radius.circular(45.0))),
+                            child: PageView(
+                                controller: _pageViewController,
+                                physics: new AlwaysScrollableScrollPhysics(),
+                                children: <Widget>[
                                   Center(
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          "Registration Page",
+                                          "Login Page",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w800,
                                               fontSize: 12.0),
                                         ),
-                                        //  email, password, name, surname, phoneNumber, address{ street, town, city, postalCode, note }
                                         _entryField('Name', 'name', 'Kwanele'),
-                                        _entryField(
-                                            'Surname', 'surname', 'Motaung',
+                                        _entryField('Surname', 'surname', 'Motaung',
                                             isPassword: true),
-                                        _entryField('Contact Number',
-                                            'phoneNumber', 'XXX XXX XXXX'),
-                                        Text(
-                                          "Address",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10.0),
-                                        ),
-                                        _entryField('Street', 'address.street',
-                                            '123 Amaza Street'),
-                                        _entryField(
-                                            'Town', 'address.town', 'Pinetown'),
-                                        _entryField(
-                                            'City', 'address.city', 'Durban'),
-                                        _entryField('Postal Code',
-                                            'address.postalCode', 'XXXX'),
-
-                                        _entryField(
-                                            'Email', 'email', 'mail@info.com'),
-                                        _entryField(
-                                          'Password',
-                                          'password',
-                                          '***********',
-                                        ),
-
                                         Material(
                                           elevation: 5,
                                           color: Colors.greenAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
+                                          borderRadius: BorderRadius.circular(12.0),
                                           child: MaterialButton(
                                             onPressed: () {
-                                              //                  Navigator.push(
-                                              //                    context,
-                                              //                    MaterialPageRoute(builder: (context) => MyLoginPage()),
-                                              //                  );
+                                              //   Navigator.push(
+                                              //     context,
+                                              //     // MaterialPageRoute(builder: (context) => MyLoginPage()),
+                                              //   );
                                             },
                                             minWidth: 200.0,
-                                            height: 8.0,
+                                            height: 16.0,
                                             child: Text(
-                                              "Register",
+                                              "Login",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: 12.0),
+                                                  fontSize: 16.0),
                                             ),
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
-                                ]))
-                          ]),
-                    )),
-              )
+                                  Center(
+                                      child: ListView(
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.all(8.0),
+                                          children: <Widget>[
+                                        Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                "Registration Page",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 12.0),
+                                              ),
+                                              //  email, password, name, surname, phoneNumber, address{ street, town, city, postalCode, note }
+                                              _entryField('Name', 'name', 'Kwanele'),
+                                              _entryField(
+                                                  'Surname', 'surname', 'Motaung',
+                                                  isPassword: true),
+                                              _entryField('Contact Number',
+                                                  'phoneNumber', 'XXX XXX XXXX'),
+                                              Text(
+                                                "Address",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 10.0),
+                                              ),
+                                              _entryField('Street', 'address.street',
+                                                  '123 Amaza Street'),
+                                              _entryField(
+                                                  'Town', 'address.town', 'Pinetown'),
+                                              _entryField(
+                                                  'City', 'address.city', 'Durban'),
+                                              _entryField('Postal Code',
+                                                  'address.postalCode', 'XXXX'),
+
+                                              _entryField(
+                                                  'Email', 'email', 'mail@info.com'),
+                                              _entryField(
+                                                'Password',
+                                                'password',
+                                                '***********',
+                                              ),
+
+                                              Material(
+                                                elevation: 5,
+                                                color: Colors.greenAccent,
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                child: MaterialButton(
+                                                  onPressed: () {
+                                                    //                  Navigator.push(
+                                                    //                    context,
+                                                    //                    MaterialPageRoute(builder: (context) => MyLoginPage()),
+                                                    //                  );
+                                                  },
+                                                  minWidth: 200.0,
+                                                  height: 8.0,
+                                                  child: Text(
+                                                    "Register",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w500,
+                                                        fontSize: 12.0),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ]))
+                                ]),
+                          )),
+                    )
             ])));
   }
 }
