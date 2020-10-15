@@ -1,23 +1,34 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:qaphelaMobile/model/checkCase.dart';
+import 'package:qaphelaMobile/model/perpetrator.dart';
 
 class MyApi {
   static final domain = '192.168.8.100';
   static final baseUrl = "http://$domain:8001";
 
-Future<CheckCase> getCase() async {
-  http.Response res = await http.get('/api/cases/');
-  print('getCase res: ${res.toString()}');
-    Map<String, dynamic> map = jsonDecode(res.body);
-    return CheckCase.fromJson(map);
-}
-  // Future<String> profile() async {
-  //   final login = baseUrl + '/deepuser/';
-  //   http.Response _response = await http.get(login, headers: _setHeaders());
+  Future<List<CheckCase>> getCases() async {
+    final url = baseUrl + 'cases/';
+    http.Response res = await http.get(url, headers: _setHeaders());
+    List<dynamic> cases = json.decode(res.body);
+    return cases.map((i) => CheckCase.fromJson(i)).toList();
+  }
 
-  //   Map<String, dynamic> map = jsonDecode(_response.body);
-  //   return DeepUser.fromJson(map);
-  // }
+  Future<List<Perpetrators>> getAbusers() async {
+    final url = baseUrl + 'abusers/';
+    http.Response res = await http.get(url, headers: _setHeaders());
+    List<dynamic> perpetrator = json.decode(res.body);
+    return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
+  }
+
+  Future<Perpetrators> getAbuser(String name) async {
+    final url = baseUrl + 'case-check/$name/';
+    http.Response res = await http.get(url, headers: _setHeaders());
+    Map<String, dynamic> perpetrator = json.decode(res.body);
+    return Perpetrators.fromJson(perpetrator);
+  }
+
+  Map<String, String> _setHeaders() => <String, String>{
+        'Accept': 'application/json',
+      };
 }

@@ -74,13 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.white,
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.blue[50], Colors.greenAccent[100]],
-            stops: [0.1, 0.8],
-          )),
+            colors: [
+              const Color(0xffee0000),
+              const Color(0xffeeee00)
+            ],
+            tileMode: TileMode.repeated,
+            // colors: [Colors.blue[50], Colors.greenAccent[100]],
+            // stops: [0.1, 0.8],
+          ),),
         child: WelcomeScreen(),
       ),
     );

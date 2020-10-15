@@ -353,7 +353,7 @@ class _PerpetratorDetailsState extends State<PerpetratorDetails> {
                                 .contactDetails
                                 .primaryContactNumber),
                           ],
-                        ))))
+                        ),),),)
           ]),
           ListView.builder(
               shrinkWrap: true,
