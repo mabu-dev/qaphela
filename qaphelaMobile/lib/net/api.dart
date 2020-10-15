@@ -21,12 +21,14 @@ class MyApi {
     return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
   }
 
-  Future<Perpetrators> getAbuser(String name) async {
-    final url = baseUrl + 'case-check/$name/';
+  Future<List<Perpetrators>> getAbuser(String name) async {
+    final url = baseUrl + 'case-check/$name';
     http.Response res = await http.get(url, headers: _setHeaders());
-    Map<String, dynamic> perpetrator = json.decode(res.body);
-    return Perpetrators.fromJson(perpetrator);
+    List<dynamic> perpetrator = json.decode(res.body);
+    return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
   }
+
+
 
   Map<String, String> _setHeaders() => <String, String>{
         'Accept': 'application/json',
