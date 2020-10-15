@@ -17,10 +17,19 @@ class Abuser(generics.ListCreateAPIView):
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
     serializer_class = serializers.AbuserSerializer
+    queryset = models.Abuser.objects.all()
+
+
+class CaseCheck(generics.ListCreateAPIView):
+    # authentication_class = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.CaseSerializer
 
     def get_queryset(self):
         full_names = self.kwargs['full_names']
-        return models.Abuser.objects.filter(full_names__icontains=full_names)
+        return models.Case.objects.filter(
+            perpetrators__full_names__icontains=full_names)
 
 
 class Case(generics.RetrieveUpdateAPIView):

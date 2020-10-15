@@ -10,15 +10,22 @@ class MyApi {
   Future<List<CheckCase>> getCases() async {
     final url = baseUrl + 'cases/';
     http.Response res = await http.get(url, headers: _setHeaders());
-    List<dynamic> stringList = json.decode(res.body);
-    return stringList.map((i) => CheckCase.fromJson(i)).toList();
+    List<dynamic> cases = json.decode(res.body);
+    return cases.map((i) => CheckCase.fromJson(i)).toList();
   }
 
   Future<List<Perpetrators>> getAbusers() async {
     final url = baseUrl + 'abusers/';
     http.Response res = await http.get(url, headers: _setHeaders());
-    List<dynamic> stringList = json.decode(res.body);
-    return stringList.map((i) => Perpetrators.fromJson(i)).toList();
+    List<dynamic> perpetrator = json.decode(res.body);
+    return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
+  }
+
+  Future<Perpetrators> getAbuser(String name) async {
+    final url = baseUrl + 'case-check/$name/';
+    http.Response res = await http.get(url, headers: _setHeaders());
+    Map<String, dynamic> perpetrator = json.decode(res.body);
+    return Perpetrators.fromJson(perpetrator);
   }
 
   Map<String, String> _setHeaders() => <String, String>{
