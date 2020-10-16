@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:qaphelaMobile/model/perpetrator.dart';
 import 'package:qaphelaMobile/net/api.dart';
 import 'package:qaphelaMobile/views/perpetrator-details.dart';
@@ -10,13 +11,14 @@ class CaseCheckScreen extends StatefulWidget {
 
 class _CaseCheckScreen extends State<CaseCheckScreen> {
   String searchString;
-  List<Perpetrators> perpetrator = [];
+  List<Perpetrators> cases = [];
+  List<CheckCase> response;
   MyApi api = MyApi();
 
   setCases() async {
     List<Perpetrators> returnCases = await api.getAbusers();
     setState(() {
-      perpetrator = returnCases;
+      cases = returnCases;
     });
   }
 
@@ -52,22 +54,17 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
             iconSize: MediaQuery.of(context).size.width * 0.08,
             color: Colors.orangeAccent,
             onPressed: () async => {
-              if (searchString.isNotEmpty)
-                {
-                  perpetrator = await api.getAbuser(searchString),
-                  print("perpetrator[0].fullNames"),
-                  print(perpetrator[0].fullNames)
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (_) {
-                  //       return PerpetratorDetails(
-                  //         fullNames: perpetrator[0].fullNames,
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                },
+              response = await api.getAbuser(searchString),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) {
+                    return PerpetratorDetails(
+                      fullNames: response[0].perpetrators.fullNames,
+                    );
+                  },
+                ),
+              )
             },
           ),
         ],
@@ -93,9 +90,9 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
               "Search", 'search', 'search abuser by name or image', context),
         ),
         body: ListView.builder(
-            itemCount: perpetrator.length,
+            itemCount: cases.length,
             itemBuilder: (BuildContext listContext, int index) {
-              return perpetrator.length != 0
+              return cases.length != 0
                   ? Card(
                       elevation: 4,
                       shadowColor: Colors.orangeAccent[100],
@@ -104,7 +101,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (_) {
                             return PerpetratorDetails(
-                              fullNames: perpetrator[index].fullNames,
+                              fullNames: cases[index].fullNames,
                             );
                           }));
                         },
@@ -116,9 +113,8 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      perpetrator[index].imageurl != null
-                                          ? Image.network(
-                                              perpetrator[index].imageurl)
+                                      cases[index].imageurl != null
+                                          ? Image.network(cases[index].imageurl)
                                           : Icon(
                                               Icons.person,
                                               color: Colors.orangeAccent,
@@ -135,7 +131,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              perpetrator[index].fullNames,
+                                              cases[index].fullNames,
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
@@ -148,8 +144,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                                                 padding: EdgeInsets.only(
                                                     bottom: 1.0)),
                                             Text(
-                                              perpetrator[index]
-                                                  .workplaceDetails,
+                                              cases[index].workplaceDetails,
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(

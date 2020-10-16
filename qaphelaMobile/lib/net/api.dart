@@ -4,8 +4,8 @@ import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:qaphelaMobile/model/perpetrator.dart';
 
 class MyApi {
-  static final domain = '192.168.8.100';
-  static final baseUrl = "http://$domain:8001";
+  static final domain = '192.168.43.42';
+  static final baseUrl = "http://$domain:8000/api/";
 
   Future<List<CheckCase>> getCases() async {
     final url = baseUrl + 'cases/';
@@ -21,14 +21,13 @@ class MyApi {
     return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
   }
 
-  Future<List<Perpetrators>> getAbuser(String name) async {
-    final url = baseUrl + 'case-check/$name';
+  Future<List<CheckCase>> getAbuser(String name) async {
+    final url = baseUrl + 'case-check/$name/';
     http.Response res = await http.get(url, headers: _setHeaders());
     List<dynamic> perpetrator = json.decode(res.body);
-    return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
+    print(res.body);
+    return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
   }
-
-
 
   Map<String, String> _setHeaders() => <String, String>{
         'Accept': 'application/json',
