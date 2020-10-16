@@ -25,7 +25,6 @@ class MyApi {
     final url = baseUrl + 'case-check/$name/';
     http.Response res = await http.get(url, headers: _setHeaders());
     List<dynamic> perpetrator = json.decode(res.body);
-    print(res.body);
     return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
   }
 

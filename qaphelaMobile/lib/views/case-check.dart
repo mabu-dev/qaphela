@@ -11,7 +11,7 @@ class CaseCheckScreen extends StatefulWidget {
 
 class _CaseCheckScreen extends State<CaseCheckScreen> {
   String searchString;
-  List<Perpetrators> cases = [];
+  List<Perpetrators> cases;
   List<CheckCase> response;
   MyApi api = MyApi();
 
@@ -64,7 +64,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                     );
                   },
                 ),
-              )
+              ),
             },
           ),
         ],
@@ -75,99 +75,105 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            iconSize: MediaQuery.of(context).size.width * 0.08,
-            color: Colors.white,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.greenAccent,
-          title: _entryField(
-              "Search", 'search', 'search abuser by name or image', context),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          iconSize: MediaQuery.of(context).size.width * 0.08,
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: ListView.builder(
-            itemCount: cases.length,
-            itemBuilder: (BuildContext listContext, int index) {
-              return cases.length != 0
-                  ? Card(
-                      elevation: 4,
-                      shadowColor: Colors.orangeAccent[100],
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.greenAccent,
+        title: _entryField(
+            "Search", 'search', 'search abuser by name or image', context),
+      ),
+      body: ListView.builder(
+        itemCount: cases.length,
+        itemBuilder: (BuildContext listContext, int index) {
+          return cases.length != 0
+              ? Card(
+                  elevation: 4,
+                  shadowColor: Colors.orangeAccent[100],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
                             return PerpetratorDetails(
                               fullNames: cases[index].fullNames,
                             );
-                          }));
-                        },
-                        child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: SizedBox(
-                                height: 52,
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      cases[index].imageurl != null
-                                          ? Image.network(cases[index].imageurl)
-                                          : Icon(
-                                              Icons.person,
-                                              color: Colors.orangeAccent,
-                                              size: 50,
-                                              semanticLabel:
-                                                  'Text to announce in accessibility modes',
-                                            ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(left: 2.0)),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              cases[index].fullNames,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const Padding(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 1.0)),
-                                            Text(
-                                              cases[index].workplaceDetails,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 14.0,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ]))),
-                      ))
-                  : ListTile(
-                      onTap: () {
-                        print('clicked Case number $index');
-                      },
-                      leading: Icon(Icons.list),
-                      trailing: Text(
-                        "GFG",
-                        style: TextStyle(color: Colors.green, fontSize: 15),
+                          },
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        height: 52,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            cases[index].imageurl != null
+                                ? Image.network(cases[index].imageurl)
+                                : Icon(
+                                    Icons.person,
+                                    color: Colors.orangeAccent,
+                                    size: 50,
+                                    semanticLabel:
+                                        'Text to announce in accessibility modes',
+                                  ),
+                            const Padding(padding: EdgeInsets.only(left: 2.0)),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    cases[index].fullNames,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Padding(
+                                      padding: EdgeInsets.only(bottom: 1.0)),
+                                  Text(
+                                    cases[index].workplaceDetails,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      title: Text("Case List is empty "));
-            }));
+                    ),
+                  ),
+                )
+              : ListTile(
+                  onTap: () {
+                    print('clicked Case number $index');
+                  },
+                  leading: Icon(Icons.list),
+                  trailing: Text(
+                    "GFG",
+                    style: TextStyle(color: Colors.green, fontSize: 15),
+                  ),
+                  title: Text("Case List is empty "));
+        },
+      ),
+    );
   }
 }
 
