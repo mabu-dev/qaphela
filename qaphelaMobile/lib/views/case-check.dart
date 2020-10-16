@@ -89,7 +89,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
         title: _entryField(
             "Search", 'search', 'search abuser by name or image', context),
       ),
-      body: ListView.builder(
+      body: cases != null ? ListView.builder(
         itemCount: cases.length,
         itemBuilder: (BuildContext listContext, int index) {
           return cases.length != 0
@@ -172,6 +172,11 @@ class _CaseCheckScreen extends State<CaseCheckScreen> {
                   ),
                   title: Text("Case List is empty "));
         },
+      ) : Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.greenAccent,
+          strokeWidth: 2,
+        ),
       ),
     );
   }

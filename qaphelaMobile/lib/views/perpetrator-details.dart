@@ -67,7 +67,7 @@ class _PerpetratorDetailsState extends State<PerpetratorDetails> {
           )
         ];
       },
-      body: new Container(
+      body: per != null ? Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -166,6 +166,11 @@ class _PerpetratorDetailsState extends State<PerpetratorDetails> {
                 return PerpetratorEntry(checkCase: per[index]);
               })
         ]),
+      ): Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.greenAccent,
+          strokeWidth: 2,
+        ),
       ),
     ));
   }

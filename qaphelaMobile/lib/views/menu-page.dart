@@ -52,12 +52,6 @@ class _MenuSeen extends State<MenuScreen> {
   List<MenuButton> menuItems = [
     MenuButton.fromJson({'label': 'FetchMe', 'icon': 59512}),
     MenuButton.fromJson({'label': 'CaseCheck', 'icon': 57535}),
-    // MenuButton.fromJson({'label': 'Diagnose', 'icon': 59642}),
-    // MenuButton.fromJson({'label': 'Claims', 'icon': 59548}),
-    // MenuButton.fromJson({'label': 'Analytics', 'icon': 59105}),
-    // MenuButton.fromJson({'label': 'Community', 'icon': 59375}),
-    // MenuButton.fromJson({'label': 'Pharmacies', 'icon': 58704}),
-    // MenuButton.fromJson({'label': 'Profile', 'icon': 59558})
   ];
 
   Widget myMenu(List<MenuButton> list, BuildContext context) {
@@ -75,7 +69,6 @@ class _MenuSeen extends State<MenuScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.greenAccent,
-
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.power_settings_new),
@@ -120,24 +113,6 @@ class _MenuSeen extends State<MenuScreen> {
       case 'CaseCheck':
         Navigator.pushNamed(event, '/caseCheck');
         break;
-      case 'Diagnose':
-        Navigator.pushNamed(event, '/diagnose');
-        break;
-      case 'Claims':
-        Navigator.pushNamed(event, '/claims');
-        break;
-      case 'Analytics':
-        Navigator.pushNamed(event, '/analytics');
-        break;
-      case 'Community':
-        Navigator.pushNamed(event, '/MenuScreenCommunity');
-        break;
-      case 'Pharmacies':
-        Navigator.pushNamed(event, '/pharmacies');
-        break;
-      case 'Profile':
-        Navigator.pushNamed(event, '/MenuScreenProfile');
-        break;
       default:
         break;
     }
@@ -146,8 +121,11 @@ class _MenuSeen extends State<MenuScreen> {
 
 class MyMenu extends StatelessWidget {
   List<MenuButton> list;
+
   MyMenu(this.list);
+
   MyMenu.extended();
+
   MenuButton menuButton;
 
   void _handleClick(String path, BuildContext event) {
@@ -158,24 +136,6 @@ class MyMenu extends StatelessWidget {
       case 'CaseCheck':
         Navigator.pushNamed(event, '/caseCheck');
         break;
-      case 'Diagnose':
-        Navigator.pushNamed(event, '/diagnose');
-        break;
-      case 'Claims':
-        Navigator.pushNamed(event, '/claims');
-        break;
-      case 'Analytics':
-        Navigator.pushNamed(event, '/analytics');
-        break;
-      case 'Community':
-        Navigator.pushNamed(event, '/MenuScreenCommunity');
-        break;
-      case 'Pharmacies':
-        Navigator.pushNamed(event, '/pharmacies');
-        break;
-      case 'Profile':
-        Navigator.pushNamed(event, '/MenuScreenProfile');
-        break;
       default:
         break;
     }
@@ -184,11 +144,18 @@ class MyMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.all(8.0),
-            children: list.map((item) => MenuButtonWidget(bc: context,mb: item,)).toList()
-        )
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.all(8.0),
+        children: list
+            .map(
+              (item) => MenuButtonWidget(
+                bc: context,
+                mb: item,
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }
@@ -197,26 +164,28 @@ class MyMenu extends StatelessWidget {
 class MenuButtonWidget extends StatelessWidget {
   MenuButton mb;
   BuildContext bc;
+
   MenuButtonWidget({Key key, @required this.mb, @required this.bc})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-            onTap: () => MyMenu.extended()._handleClick(mb.label, bc),
-            child: AnimatedContainer(
-        duration: Duration(milliseconds: 5),
-        curve: Curves.bounceOut,
-        width: MediaQuery.of(context).size.width * 0.8,
-        height: MediaQuery.of(context).size.height * 0.1,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.orangeAccent[100],
-          borderRadius: BorderRadius.circular(20),
-          shape: BoxShape.rectangle,
-        ),
-        // padding: const EdgeInsets.fromLTRB(2, 4, 2, 4),
-        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-        child: Text(
+        onTap: () => MyMenu.extended()._handleClick(mb.label, bc),
+        child: AnimatedContainer(
+            duration: Duration(milliseconds: 5),
+            curve: Curves.bounceOut,
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.1,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.orangeAccent[100],
+              borderRadius: BorderRadius.circular(20),
+              shape: BoxShape.rectangle,
+            ),
+            // padding: const EdgeInsets.fromLTRB(2, 4, 2, 4),
+            margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Text(
               mb.label,
               textAlign: TextAlign.start,
               style: TextStyle(

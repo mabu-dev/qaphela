@@ -28,6 +28,13 @@ class MyApi {
     return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
   }
 
+  // Future<List<CheckCase>> updateCase(CheckCase name) async {
+  //   final url = baseUrl + 'case-check/$name/';
+  //   http.Response res = await http.put(url, headers: _setHeaders(), name);
+  //   List<dynamic> perpetrator = json.decode(res.body);
+  //   return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
+  // }
+
   Map<String, String> _setHeaders() => <String, String>{
         'Accept': 'application/json',
       };
