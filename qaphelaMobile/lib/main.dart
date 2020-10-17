@@ -6,10 +6,10 @@ import 'package:qaphelaMobile/views/menu-page.dart';
 import 'package:qaphelaMobile/views/welcome-screen.dart';
 import 'package:localstorage/localstorage.dart';
 
-
 void main() {
   runApp(MyApp());
 }
+
 var routes = <String, WidgetBuilder>{
   '/login': (context) => Login(),
   '/': (context) => WelcomeScreen(),
@@ -17,12 +17,9 @@ var routes = <String, WidgetBuilder>{
   '/menu': (context) => MenuScreen(),
   '/caseCheck': (context) => CaseCheckScreen(),
   '/caseDetails': (context) => CaseCheckScreen(),
-  
 };
+
 class MyApp extends StatelessWidget {
-  
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,11 +33,10 @@ class MyApp extends StatelessWidget {
       ),
       // home: Login(),
       initialRoute: '/',
-       routes: routes,
+      routes: routes,
     );
-
   }
-  }
+}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -52,24 +48,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final LocalStorage storage = new LocalStorage('qaphelaMobile');
 
   String getFirstUse() {
     Map<String, dynamic> token = this.storage.getItem('firstUse');
-    print("*****************    getFirstUse: ****************** ${token.toString()}");
     return token['firstUse'];
   }
 
- @override
+  @override
   void initState() {
-    String t = getFirstUse();
-    print("*****************    initState: ****************** $t");
+    getFirstUse();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -77,18 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [
-              const Color(0xffee0000),
-              const Color(0xffeeee00)
-            ],
+            // colors: [const Color(0xffee0000), const Color(0xffeeee00)],
             tileMode: TileMode.repeated,
-            // colors: [Colors.blue[50], Colors.greenAccent[100]],
-            // stops: [0.1, 0.8],
-          ),),
+            colors: [Colors.blue[50], Colors.greenAccent[100]],
+            stops: [0.1, 0.8],
+          ),
+        ),
         child: WelcomeScreen(),
       ),
     );
   }
-
 }
-

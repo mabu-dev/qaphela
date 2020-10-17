@@ -4,7 +4,7 @@ import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:qaphelaMobile/model/perpetrator.dart';
 
 class MyApi {
-  static final domain = '192.168.43.42';
+  static final domain = '192.168.8.104';
   static final baseUrl = "http://$domain:8000/api/";
 
   Future<List<CheckCase>> getCases() async {
@@ -21,19 +21,24 @@ class MyApi {
     return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
   }
 
-  Future<List<CheckCase>> getAbuser(String name) async {
+  Future<List<CheckCase>> getAbuser(name) async {
     final url = baseUrl + 'case-check/$name/';
     http.Response res = await http.get(url, headers: _setHeaders());
     List<dynamic> perpetrator = json.decode(res.body);
     return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
   }
 
-  // Future<List<CheckCase>> updateCase(CheckCase name) async {
-  //   final url = baseUrl + 'case-check/$name/';
-  //   http.Response res = await http.put(url, headers: _setHeaders(), name);
-  //   List<dynamic> perpetrator = json.decode(res.body);
-  //   return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
-  // }
+  Future<List<CheckCase>> updateCase(CheckCase updatedCase) async {
+    final login = baseUrl + 'api/case/${updatedCase.id}/';
+    return await http
+        .post(login, headers: _setHeaders(), body: updatedCase)
+        .then(
+      (dynamic res) {
+        if (res['error']) throw new Exception(res['error_msg']);
+        return res.map((i) => CheckCase.fromJson(i)).toList();
+      },
+    );
+  }
 
   Map<String, String> _setHeaders() => <String, String>{
         'Accept': 'application/json',
