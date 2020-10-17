@@ -4,7 +4,7 @@ import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:qaphelaMobile/model/perpetrator.dart';
 
 class MyApi {
-  static final domain = '192.168.43.42';
+  static final domain = '192.168.8.101';
   static final baseUrl = "http://$domain:8000/api/";
 
   Future<List<CheckCase>> getCases() async {

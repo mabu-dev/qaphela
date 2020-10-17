@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qaphelaMobile/model/checkCase.dart';
+import 'package:qaphelaMobile/shared/widgets/utils.dart';
 import 'package:qaphelaMobile/views/details-entry.dart';
 
 class CaseDetails extends StatefulWidget {
@@ -101,7 +102,8 @@ class _CaseDetailsState extends State<CaseDetails> {
             )
           ],
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: Colors.white,
+          brightness: Brightness.dark,
           title: Text(
             widget.checkCase.title,
             style: TextStyle(fontSize: 16, color: Colors.black),
@@ -112,6 +114,88 @@ class _CaseDetailsState extends State<CaseDetails> {
           color: Colors.white,
           child: Column(
             children: <Widget>[
+              Row(children: <Widget>[
+                Card(
+                    color: Colors.green[50],
+                    elevation: 4,
+                    shadowColor: Colors.orangeAccent[100],
+                    child: SizedBox(
+                        height: 90,
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        // child: Expanded(
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text("Complainant",
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.orange,
+                                    )),
+                                Row(
+                                  children: [
+                                    widget.checkCase.reporter.imageurl != null
+                                        ? Image.network(
+                                            widget.checkCase.reporter.imageurl)
+                                        : Icon(
+                                            Icons.person,
+                                            color: Colors.orangeAccent,
+                                            size: 50,
+                                            semanticLabel:
+                                                'Text to announce in accessibility modes',
+                                          ),
+                                    Column(children: [
+                                      Text(widget
+                                          .checkCase.reporter.user.firstName),
+                                      Text(widget
+                                          .checkCase.reporter.user.lastName),
+                                    ])
+                                  ],
+                                ),
+                              ],
+                            )))),
+                Padding(padding: EdgeInsets.only(right: 1)),
+                Card(
+                  color: Colors.green[50],
+                  elevation: 4,
+                  shadowColor: Colors.orangeAccent[100],
+                  child: SizedBox(
+                    height: 90,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    // child: Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: <Widget>[
+                          // Text("Contacts",
+                          //     style: const TextStyle(
+                          //       fontSize: 18.0,
+                          //       fontWeight: FontWeight.w200,
+                          //       color: Colors.orange,
+                          //     )),
+                          Padding(padding: EdgeInsets.only(bottom: 2)),
+                          Text(widget.checkCase.reporter.socialProfiles.name,
+                              style: const TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black45,
+                              )),
+                          Text(
+                              widget.checkCase.reporter.socialProfiles
+                                  .profilePage,
+                              style: const TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black45,
+                              )),
+                          Padding(padding: EdgeInsets.only(bottom: 1)),
+                          Text(widget.checkCase.reporter.contactDetails
+                              .primaryContactNumber),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ]),
               SingleChildScrollView(
                   child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -182,7 +266,22 @@ class _CaseDetailsState extends State<CaseDetails> {
                             )
                           : null,
                     )
-                  ]))
+                  ])),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 0.0),
+                child: Container(
+                  height: 75,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      facebookCard,
+                      twitterCard,
+                      githubCard,
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ));

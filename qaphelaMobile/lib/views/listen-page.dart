@@ -26,7 +26,10 @@ class _ListenPageState extends State<ListenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.white,
+      ),
       body: Column(
         children: <Widget>[
           currentLocation == null

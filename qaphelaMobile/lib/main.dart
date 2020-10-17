@@ -28,8 +28,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Qaphela',
+      
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColorDark:Colors.green,
+        primarySwatch: Colors.green,
         secondaryHeaderColor: Colors.green[300],
         fontFamily: 'Cabin',
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -71,7 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
    
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          brightness: Brightness.dark,
+        ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

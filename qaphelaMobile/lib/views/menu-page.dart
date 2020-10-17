@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qaphelaMobile/model/menu-button.dart';
+import 'package:qaphelaMobile/shared/widgets/blinking-button.dart';
+import 'package:qaphelaMobile/shared/widgets/utils.dart';
 
 class MenuScreen extends StatefulWidget {
   @override
@@ -68,7 +70,8 @@ class _MenuSeen extends State<MenuScreen> {
     return new Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.white,
+        brightness: Brightness.dark,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.power_settings_new),
@@ -80,7 +83,7 @@ class _MenuSeen extends State<MenuScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.orangeAccent[100],
+      // backgroundColor: Colors.orangeAccent[100],
       body: WillPopScope(
         onWillPop: () async => Future.value(false),
         child: Container(
@@ -131,7 +134,73 @@ class MyMenu extends StatelessWidget {
   void _handleClick(String path, BuildContext event) {
     switch (path) {
       case 'FetchMe':
-        Navigator.pushNamed(event, '/fetchMe');
+        // Navigator.pushNamed(event, '/fetchMe');
+        showDialog(
+          context: event,
+          builder: (context) {
+            return AlertDialog(
+              title: Container(
+                  alignment: Alignment.center,
+                  child: Text("Fetch Me Options",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        // fontSize: 18.0,
+                        // fontFamily: 'helvetica_neue_light',
+                      ))),
+              content: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: new Text(
+                        'FetchMe is a service designed for users who either need help right now or need an escape plan to leave an abuser',
+                        maxLines: 5,
+                        overflow: TextOverflow.fade,
+                        style: cardTextStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+
+                    // dialog centre
+
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Padding(
+                            padding: new EdgeInsets.all(2.0),
+                            child: MyBlinkingButton(),
+                          ),
+                          new Padding(
+                            padding: new EdgeInsets.all(2.0),
+                            child: MaterialButton(
+                              onPressed: () => null,
+                              child: Text("Plan Escape"),
+                              color: Colors.greenAccent,
+                            ),
+                          ),
+                        ])
+
+                    // dialog bottom
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                new FlatButton(
+                    child: new Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+              ],
+            );
+          },
+        );
         break;
       case 'CaseCheck':
         Navigator.pushNamed(event, '/caseCheck');

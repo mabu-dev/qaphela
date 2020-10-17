@@ -7,7 +7,6 @@ class LandingScreen extends StatefulWidget {
   _LandingScreen createState() => _LandingScreen();
 }
 
-
 class _LandingScreen extends State<LandingScreen> {
   LatLng _initialcameraposition = LatLng(20.5937, 78.9629);
   GoogleMapController _controller;
