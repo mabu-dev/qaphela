@@ -29,15 +29,11 @@ class MyApi {
   }
 
   Future<List<CheckCase>> updateCase(CheckCase updatedCase) async {
-    final login = baseUrl + 'api/case/${updatedCase.id}/';
-    return await http
-        .post(login, headers: _setHeaders(), body: updatedCase)
-        .then(
-      (dynamic res) {
-        if (res['error']) throw new Exception(res['error_msg']);
-        return res.map((i) => CheckCase.fromJson(i)).toList();
-      },
-    );
+    final caseUrl = baseUrl + 'api/case/${updatedCase.id}/';
+    http.Response res =
+        await http.post(caseUrl, headers: _setHeaders(), body: updatedCase);
+    List<dynamic> cases = json.decode(res.body);
+    return cases.map((i) => CheckCase.fromJson(i)).toList();
   }
 
   Map<String, String> _setHeaders() => <String, String>{
