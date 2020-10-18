@@ -98,7 +98,6 @@ class AbuserSerializer(DynamicModelSerializer):
         model = models.Abuser
         fields = ['full_names', 'imageurl', 'workplace_details',
                   'contact_details', 'social_profiles']
-        read_only_fields = ('username', )
 
     def get_contact_details(self, instance):
         return model_to_dict(models.ContactDetails.objects.get(user=instance.user))
@@ -106,8 +105,19 @@ class AbuserSerializer(DynamicModelSerializer):
 
 class CaseSerializer(serializers.ModelSerializer):
     reporter = QaphelaUserSerializer()
+    # perpetrators = AbuserSerializer(many=True)
     perpetrators = AbuserSerializer()
 
     class Meta:
         model = models.Case
+        fields = '__all__'
+
+
+class FetchMeSerializer(serializers.ModelSerializer):
+    responders = QaphelaUserSerializer(many=True)
+    pickup_address = AddressSerializer()
+    contact_details = ContactDetailsSerializer()
+
+    class Meta:
+        model = models.FetchMeIncident
         fields = '__all__'

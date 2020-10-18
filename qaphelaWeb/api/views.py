@@ -40,6 +40,14 @@ class Case(generics.RetrieveUpdateAPIView):
     queryset = models.Case.objects.all()
 
 
+class FetchMe(generics.RetrieveUpdateAPIView):
+    # authentication_class = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.FetchMeSerializer
+    queryset = models.FetchMeIncident.objects.all()
+
+
 class Abusers(generics.ListCreateAPIView):
     # authentication_class = (JSONWebTokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
