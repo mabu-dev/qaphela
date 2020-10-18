@@ -21,19 +21,20 @@ class MyApi {
     return perpetrator.map((i) => Perpetrators.fromJson(i)).toList();
   }
 
-  Future<List<CheckCase>> getAbuser(String name) async {
+  Future<List<CheckCase>> getAbuser(name) async {
     final url = baseUrl + 'case-check/$name/';
     http.Response res = await http.get(url, headers: _setHeaders());
     List<dynamic> perpetrator = json.decode(res.body);
     return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
   }
 
-  // Future<List<CheckCase>> updateCase(CheckCase name) async {
-  //   final url = baseUrl + 'case-check/$name/';
-  //   http.Response res = await http.put(url, headers: _setHeaders(), name);
-  //   List<dynamic> perpetrator = json.decode(res.body);
-  //   return perpetrator.map((i) => CheckCase.fromJson(i)).toList();
-  // }
+  Future<List<CheckCase>> updateCase(CheckCase updatedCase) async {
+    final caseUrl = baseUrl + 'api/case/${updatedCase.id}/';
+    http.Response res =
+        await http.post(caseUrl, headers: _setHeaders(), body: updatedCase);
+    List<dynamic> cases = json.decode(res.body);
+    return cases.map((i) => CheckCase.fromJson(i)).toList();
+  }
 
   Map<String, String> _setHeaders() => <String, String>{
         'Accept': 'application/json',
