@@ -13,7 +13,7 @@ void main() {
 var routes = <String, WidgetBuilder>{
   '/login': (context) => Login(),
   '/': (context) => WelcomeScreen(),
-  '/fetchMe': (context) => LandingScreen(),
+  '/fetchMe': (context) => MyCustomForm(),
   '/menu': (context) => MenuScreen(),
   '/caseCheck': (context) => CaseCheckScreen(),
   '/caseDetails': (context) => CaseCheckScreen(),

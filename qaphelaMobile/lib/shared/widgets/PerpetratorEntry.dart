@@ -25,13 +25,14 @@ class PerpetratorEntry extends StatelessWidget {
             elevation: 4,
             shadowColor: Colors.orangeAccent[100],
             child: SizedBox(
-              height: 140,
+              height: MediaQuery.of(context).size.width * 0.35,
               // child: Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    
                     Expanded(
                       flex: 1,
                       child: Column(
@@ -58,6 +59,7 @@ class PerpetratorEntry extends StatelessWidget {
                         ],
                       ),
                     ),
+                    
                     Expanded(
                       flex: 1,
                       child: Column(

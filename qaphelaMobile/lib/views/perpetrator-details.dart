@@ -39,8 +39,7 @@ class _PerpetratorDetailsState extends State<PerpetratorDetails> {
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
           SliverAppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.dark,
+            backgroundColor: Colors.green[50],
             expandedHeight: 200.0,
             floating: false,
             pinned: true,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:qaphelaMobile/model/menu-button.dart';
 import 'package:qaphelaMobile/shared/widgets/blinking-button.dart';
 import 'package:qaphelaMobile/shared/widgets/utils.dart';
+import 'package:qaphelaMobile/views/landing.dart';
 
 class MenuScreen extends StatefulWidget {
   @override
@@ -68,21 +71,21 @@ class _MenuSeen extends State<MenuScreen> {
     // ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
 
     return new Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        brightness: Brightness.dark,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.power_settings_new),
-            iconSize: 36.0,
-            color: Colors.white,
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: Colors.white,
+      //   brightness: Brightness.dark,
+      //   actions: <Widget>[
+      //     IconButton(
+      //       icon: Icon(Icons.power_settings_new),
+      //       iconSize: 36.0,
+      //       color: Colors.white,
+      //       onPressed: () {
+      //         Navigator.pushReplacementNamed(context, '/');
+      //       },
+      //     ),
+      //   ],
+      // ),
       // backgroundColor: Colors.orangeAccent[100],
       body: WillPopScope(
         onWillPop: () async => Future.value(false),
@@ -130,6 +133,28 @@ class MyMenu extends StatelessWidget {
   MyMenu.extended();
 
   MenuButton menuButton;
+
+  Widget showForm(BuildContext context){
+    return AlertDialog(
+              title: Container(
+                  alignment: Alignment.center,
+                  child: Text("Schedule FetchMe Request",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        // fontSize: 18.0,
+                        // fontFamily: 'helvetica_neue_light',
+                      ))),
+              content: MyCustomForm(),
+              actions: <Widget>[
+                new FlatButton(
+                    child: new Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+              ],
+            );
+  }
 
   void _handleClick(String path, BuildContext event) {
     switch (path) {
@@ -180,7 +205,11 @@ class MyMenu extends StatelessWidget {
                           new Padding(
                             padding: new EdgeInsets.all(2.0),
                             child: MaterialButton(
-                              onPressed: () => null,
+                              onPressed: () => {
+                                Navigator.of(context).pop(),
+                                Navigator.popAndPushNamed(context, '/fetchMe'),
+                                // showForm(event),
+                                },
                               child: Text("Plan Escape"),
                               color: Colors.greenAccent,
                             ),
@@ -210,21 +239,51 @@ class MyMenu extends StatelessWidget {
     }
   }
 
+  LatLng _initialcameraposition = LatLng(27.944183, -26.259960);
+  GoogleMapController _controller;
+  Location _location = Location();
+
+  void _onMapCreated(GoogleMapController _cntlr) {
+    _controller = _cntlr;
+    _location.onLocationChanged.listen((l) {
+      _controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.all(8.0),
-        children: list
-            .map(
-              (item) => MenuButtonWidget(
-                bc: context,
-                mb: item,
-              ),
-            )
-            .toList(),
-      ),
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            GoogleMap(
+              initialCameraPosition:
+                  CameraPosition(target: _initialcameraposition),
+              mapType: MapType.normal,
+              // onMapCreated: _onMapCreated,
+              myLocationEnabled: true,
+            ),
+            Center(child:ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(8.0),
+              children: list
+                  .map(
+                    (item) => MenuButtonWidget(
+                      bc: context,
+                      mb: item,
+                    ),
+                  )
+                  .toList(),
+            ))
+          ],
+        )),
+      
     );
   }
 }

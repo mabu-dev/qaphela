@@ -69,7 +69,7 @@ class _CaseCheckScreen extends State<CaseCheckScreen>
               // brightness: Brightness.dark,
               iconTheme: IconThemeData(color: Colors.black),
               actionsIconTheme: IconThemeData(color: Colors.blue),
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.orange[50],
                 brightness: Brightness.dark,
                 expandedHeight: 200.0,
                 floating: false,
