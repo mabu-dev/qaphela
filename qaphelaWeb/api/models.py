@@ -89,3 +89,20 @@ class Case(models.Model):
     settlement_type = models.CharField(
         max_length=15, choices=SETTLEMENT_TYPE, null=True)
     police_case_number = models.CharField(max_length=100, null=True)
+
+
+class FetchMeIncident(models.Model):
+    INCIDENT_TYPES = [("NOW", "NOW"), ("SCHEDULED", "SCHEDULED")]
+    STATUS = [("WAITING", "WAITING"), ("OPEN", "OPEN"), ("CLOSED", "CLOSED"),
+              ("CANCELLED", "CANCELLED")]
+    incident_type = models.CharField(
+        max_length=10, choices=INCIDENT_TYPES)
+    incident_status = models.CharField(
+        max_length=10, choices=STATUS, default="WAITING")
+    pickup_address = models.ForeignKey(
+        Address, on_delete=models.CASCADE)
+    pickup_time = models.DateTimeField()
+    victim_full_names = models.CharField(max_length=100)
+    contact_details = models.ForeignKey(
+        ContactDetails, on_delete=models.CASCADE)
+    responders = models.ManyToManyField(QaphelaUser)
