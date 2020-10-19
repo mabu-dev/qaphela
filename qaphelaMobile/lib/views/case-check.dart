@@ -59,7 +59,6 @@ class _CaseCheckScreen extends State<CaseCheckScreen>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
       backgroundColor: Colors.white,
-      
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxScroled) {
           return <Widget>[
@@ -69,106 +68,103 @@ class _CaseCheckScreen extends State<CaseCheckScreen>
               // brightness: Brightness.dark,
               iconTheme: IconThemeData(color: Colors.black),
               actionsIconTheme: IconThemeData(color: Colors.blue),
-                backgroundColor: Colors.orange[50],
-                brightness: Brightness.dark,
-                expandedHeight: 200.0,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: false,
-                  collapseMode: CollapseMode.pin,
-                  title: Text(
-                    'Perpetrators',
-                    //$ can get data and use it !
-                    style: headerTextStyle,
-                  ),
-                  // title: Text((widget.fullNames != null ? widget.fullNames : null),
-                  // style: TextStyle(color: Colors.black, fontSize: 16)),
-                  background: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      // SizedBox(
-                      //   height: smallSeparateSize,
-                      // ),SizedBox(
-                      //   height: smallSeparateSize,
-                      // ),
-                      // Row(
-                      //   children: <Widget>[
-                      //     IconButton(
-                      //       icon: Icon(
-                      //         Icons.keyboard_arrow_left,
-                      //         color: Colors.black,
-                      //         size: 37,
-                      //       ),
-                      //       onPressed: () {
-                      //         Navigator.of(context).pop();
-                      //       },
-                      //     ),
-                      //     Spacer(),
-                      //     IconButton(
-                      //       icon: new Icon(
-                      //         const IconData(0xe900, fontFamily: 'Menu Dot'),
-                      //       ),
-                      //       onPressed: () {},
-                      //     ),
-                      //   ],
-                      // ),
-                      SizedBox(
-                        height: smallSeparateSize,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(15),
+              backgroundColor: Colors.orange[50],
+              brightness: Brightness.dark,
+              expandedHeight: 200.0,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: false,
+                collapseMode: CollapseMode.pin,
+                title: Text(
+                  'Perpetrators',
+                  //$ can get data and use it !
+                  style: headerTextStyle,
+                ),
+                // title: Text((widget.fullNames != null ? widget.fullNames : null),
+                // style: TextStyle(color: Colors.black, fontSize: 16)),
+                background: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    // SizedBox(
+                    //   height: smallSeparateSize,
+                    // ),SizedBox(
+                    //   height: smallSeparateSize,
+                    // ),
+                    // Row(
+                    //   children: <Widget>[
+                    //     IconButton(
+                    //       icon: Icon(
+                    //         Icons.keyboard_arrow_left,
+                    //         color: Colors.black,
+                    //         size: 37,
+                    //       ),
+                    //       onPressed: () {
+                    //         Navigator.of(context).pop();
+                    //       },
+                    //     ),
+                    //     Spacer(),
+                    //     IconButton(
+                    //       icon: new Icon(
+                    //         const IconData(0xe900, fontFamily: 'Menu Dot'),
+                    //       ),
+                    //       onPressed: () {},
+                    //     ),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      height: smallSeparateSize,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                              controller: _textEditingController,
+                              onSubmitted: (text) {
+                                value = text;
 
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                                controller: _textEditingController,
-                                onSubmitted: (text) {
-                                  value = text;
+                                //_textEditingController.addListener(() {
+                                //it adds value to listener when doing certain action
+                                // });
 
-                                  //_textEditingController.addListener(() {
-                                  //it adds value to listener when doing certain action
-                                  // });
+                                print(_textEditingController.text);
 
-                                  print(_textEditingController.text);
+                                //yeah,get the index of page successfully!
 
-                                  //yeah,get the index of page successfully!
+                                print('$pageIndex');
+                                _textEditingController.text = "";
 
-                                  print('$pageIndex');
-                                  _textEditingController.text = "";
-
-                                  //Do something
-                                },
-                                textInputAction: TextInputAction.search,
-                                decoration: SearchBarDecoration),
-                          ),
+                                //Do something
+                              },
+                              textInputAction: TextInputAction.search,
+                              decoration: SearchBarDecoration),
                         ),
                       ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      
-                    ],
-                  ),
-                  
-                ),
-                actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.person_add_alt),
-                      iconSize: 30.0,
-                      color: Colors.black,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
+                    ),
+                    SizedBox(
+                      height: 10.0,
                     ),
                   ],
-                )
+                ),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.person_add_alt),
+                  iconSize: 30.0,
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            )
           ];
         },
         body: cases != null
@@ -176,85 +172,86 @@ class _CaseCheckScreen extends State<CaseCheckScreen>
                 itemCount: cases.length,
                 itemBuilder: (BuildContext listContext, int index) {
                   return GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return PerpetratorDetails(
-                              fullNames: cases[index].fullNames,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    child:Padding(
-                      padding: EdgeInsets.fromLTRB(8,2,8,2),
-                      child:Container(
-                    height: 130,
-                    margin: EdgeInsets.only(bottom: 8),
-                    child: Container(
-                      decoration: new BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            bottomLeft: Radius.circular(15)),
-                        color: Colors.green[50]
-                      ),
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
-                      child: Row(
-                        children: <Widget>[
-                          cases[index].imageurl != null
-                              ? Image.network(
-                                  cases[index].imageurl,
-                                  height: 120,
-                                )
-                              : Icon(
-                                  Icons.person,
-                                  color: Colors.greenAccent,
-                                  size: 120,
-                                  semanticLabel:
-                                      'Text to announce in accessibility modes',
-                                ),
-                          SizedBox(
-                            width: 5,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return PerpetratorDetails(
+                                fullNames: cases[index].fullNames,
+                              );
+                            },
                           ),
-                          Container(
-                            height: 120,
-                            width: 200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                                  child: Text(
-                                    cases[index].fullNames,
-                                    style: cardTextStyle,
+                        );
+                      },
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
+                          child: Container(
+                            height: 130,
+                            margin: EdgeInsets.only(bottom: 8),
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      bottomLeft: Radius.circular(15)),
+                                  color: Colors.green[50]),
+                              padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
+                              child: Row(
+                                children: <Widget>[
+                                  cases[index].imageurl != null
+                                      ? Image.network(
+                                          cases[index].imageurl,
+                                          height: 120,
+                                        )
+                                      : Icon(
+                                          Icons.person,
+                                          color: Colors.greenAccent,
+                                          size: 120,
+                                          semanticLabel:
+                                              'Text to announce in accessibility modes',
+                                        ),
+                                  SizedBox(
+                                    width: 5,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  cases[index].workplaceDetails,
-                                  maxLines: 2,
-                                  style: cardContextTextStyle,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                // Text(
-                                //   'to habitat loss & hunting',
-                                //   style: cardContextTextStyle,
-                                // )
-                              ],
+                                  Container(
+                                    height: 120,
+                                    width: 200,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 15, 0, 0),
+                                          child: Text(
+                                            cases[index].fullNames,
+                                            style: cardTextStyle,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          cases[index].workplaceDetails != null
+                                              ? cases[index].workplaceDetails
+                                              : 'N/A',
+                                          maxLines: 2,
+                                          style: cardContextTextStyle,
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        // Text(
+                                        //   'to habitat loss & hunting',
+                                        //   style: cardContextTextStyle,
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ))
-                  );
+                          )));
                 },
               )
             : Center(
