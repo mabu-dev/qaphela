@@ -4,6 +4,7 @@ import 'package:qaphelaMobile/model/address.dart';
 import 'package:qaphelaMobile/model/contactDetails.dart';
 import 'package:qaphelaMobile/model/fetch-me.dart';
 import 'package:qaphelaMobile/model/pick-up-address.dart';
+import 'package:qaphelaMobile/net/api.dart';
 import 'package:qaphelaMobile/shared/widgets/case-edittext.dart';
 import 'package:qaphelaMobile/shared/widgets/utils.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -33,6 +34,7 @@ final searchScaffoldKey = GlobalKey<ScaffoldState>();
 
 // Create a corresponding State class, which holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
+  MyApi api = MyApi();
   Mode _mode = Mode.overlay;
 // Map<String, dynamic> data = new Map<String, dynamic>();
   FetchMe fetch = new FetchMe();
@@ -112,7 +114,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   void handleDate(DateTime value) {
     
-    fetchMe['pickup_time'] = value;
+    fetchMe['pickup_time'] = value.toString();
   }
 
   final format = DateFormat("yyyy-MM-dd HH:mm");
@@ -269,21 +271,18 @@ class MyCustomFormState extends State<MyCustomForm> {
                       borderRadius: BorderRadius.circular(12.0),
                       child: MaterialButton(
                         onPressed: () {
-                          ContactDetails cd = ContactDetails.fromJson(contact) ;
-                          PickupAddress ad = PickupAddress.fromJson(address) ;
-
 
                           fetchMe['pickup_address'] = address;
                           fetchMe['contact_details'] = contact;
                           fetchMe['incident_type'] = 'SCHEDULE';
 
-                          fetch= FetchMe.fromJson(fetchMe);
+                          // fetch= FetchMe.fromJson(fetchMe);
 
                           // print('******** address ad: ${fetch.pickupAddress.toJson().toString()}');
                           // print('++++++++ contact : ${fetch.contactDetails.toJson().toString()}');
-                          print('________ fetchMe : ${fetch.toJson().toString()}');
+                          print('________ fetchMe : ${fetchMe.toString()}');
+                            api.fetchMeRequest(fetchMe);
 
-                          
                         },
                         minWidth: 200.0,
                         height: 8.0,

@@ -62,6 +62,8 @@ class FetchMeIncidents(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         validated_data = request.data
+        print('********  ',validated_data)
+        
         pickup_address = validated_data.pop('pickup_address')
         contact_details = validated_data.pop('contact_details')
         pickup_address = models.Address.objects.get_or_create(
@@ -80,7 +82,6 @@ class FetchMeIncidents(generics.ListCreateAPIView):
         incident['pickup_address'] = pickup_address
         incident['contact_details'] = model_to_dict(contact_details)
         print("*" * 10)
-        print(incident)
 
         return Response(incident)
 
