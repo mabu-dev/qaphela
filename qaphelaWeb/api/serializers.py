@@ -114,7 +114,7 @@ class CaseSerializer(serializers.ModelSerializer):
 
 
 class FetchMeSerializer(serializers.ModelSerializer):
-    responders = QaphelaUserSerializer(many=True)
+    responders = QaphelaUserSerializer(many=True, required=False)
     pickup_address = AddressSerializer()
     contact_details = ContactDetailsSerializer()
 
