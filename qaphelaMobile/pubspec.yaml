@@ -72,7 +72,10 @@ flutter:
       fonts:
         - asset: fonts/Cabin-Italic.ttf
         - asset: fonts/Cabin.ttf
-  
+
+    - family: SocialMediaIcon
+      fonts:
+        - asset: fonts/SocialMediaIcon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
