@@ -79,9 +79,6 @@ class FetchMeIncidents(generics.ListCreateAPIView):
         pickup_address.pop("id")
         incident['pickup_address'] = pickup_address
         incident['contact_details'] = model_to_dict(contact_details)
-        print("*" * 10)
-        print(incident)
-
         return Response(incident)
 
 

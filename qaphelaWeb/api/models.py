@@ -89,6 +89,8 @@ class Case(models.Model):
     settlement_type = models.CharField(
         max_length=15, choices=SETTLEMENT_TYPE, null=True)
     police_case_number = models.CharField(max_length=100, null=True)
+    reference_url = models.TextField(
+        validators=[URLValidator()], null=True)
 
 
 class FetchMeIncident(models.Model):
