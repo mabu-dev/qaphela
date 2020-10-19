@@ -17,6 +17,7 @@ var routes = <String, WidgetBuilder>{
   '/menu': (context) => MenuScreen(),
   '/caseCheck': (context) => CaseCheckScreen(),
   '/caseDetails': (context) => CaseCheckScreen(),
+  '/search': (context) => CustomSearchScaffold(),
 };
 
 class MyApp extends StatelessWidget {
