@@ -176,14 +176,20 @@ class _CaseDetailsState extends State<CaseDetails> {
                             //       color: Colors.orange,
                             //     )),
                             Padding(padding: EdgeInsets.only(bottom: 2)),
-                            Text(widget.checkCase.reporter.socialProfiles.name,
+                            Text(
+                                widget.checkCase.reporter.socialProfiles != null
+                                    ? widget
+                                        .checkCase.reporter.socialProfiles.name
+                                    : 'N/A',
                                 style: const TextStyle(
                                   fontSize: 14.0,
                                   color: Colors.black45,
                                 )),
                             Text(
-                                widget.checkCase.reporter.socialProfiles
-                                    .profilePage,
+                                widget.checkCase.reporter.socialProfiles != null
+                                    ? widget.checkCase.reporter.socialProfiles
+                                        .profilePage
+                                    : 'N/A',
                                 style: const TextStyle(
                                   fontSize: 14.0,
                                   color: Colors.black45,

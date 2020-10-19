@@ -8,19 +8,32 @@ List items = [
   {
     "header": "The problem",
     "description":
-        " Statistics show that most GBV cases are perpetrated by men who are very close to the victims – often their own partners. Furthermore, most case are by repeat offenders, which means women go into relationships with historically abusive men without knowing because they have no access to such empowering information.\n\n Men perpetrate GBV everywhere – at the office, at church or in a family settings, but these cases go unrecorded. This is worse in Africa cultures where such cases are buried forever by the “system”. This allows abusive men to roam the streets free as they target their next victim without any data to reveal the monsters they bury deep inside waiting for the day to explode. This needs to be stopped.\n\n Compounding the problem is an incapacitated justice system where \n\na) police don’t respond promptly to people in need, b) maladministration of GBV cases, \n\nc) inability to prosecute due to lack of evidence. A decentralised community-based approach is required.",
+        """Statistics show that most GBV acts are carried out by individuals close to the victims such as a family member or a partner. \n
+        The victim may not have known of the perpetrators abusive history due to a lack of information about this individual around them. \n
+        Individuals who are abusive by nature exist everywhere - church, work, or within the family setting.
+        \nHowever, many of these cases usually go unreported and unrecorded, allowing perpetrators to roam about freely looking for their next victim knowing their deeds are consealed and unpunished.
+        \nCompounding this problem, is the incapacitated justice system where there is: \n
+        1- A delayed response time from police for those in distress.\n
+        2- Maladministration of GBV cases\n
+        3- Inability to prosecute due to lack of supporting evidence.\n
+        """,
     // "image": "assets/images/2.png"
   },
   {
     "header": " Our solution",
-    "description":
-        "Qaphela provides a decentralised community-based platform to fight against GBV",
+    "description": """
+        Qaphela provides a decentralized community-based platform to fight GBV by putting the power in the hands of the user.\n
+        Here the user can search for alleged or charged perpetrators and seek help out of a distressing situation.
+        """,
     // "image": "assets/images/3.png"
   },
   {
     "header": "Spot the Abuser",
-    "description":
-        "Verified users can report GBV cases and the abuser from any setting – church, home, work, traditional, etc.\n\n Cases and abuser details are also sourced from third parties, eg., the police, national offenders list, etc.• Case Check allows users the look up any name on Qaphela for cases reported against them.",
+    "description": """
+        Case Check is a feature that permits verified users to search for individuals who may have cases of assault against them.\n
+        This information is derived from third parties such as LexisNexis, the police and national offenders list.\n
+        As a verified user you are more than welcome to report any case of GBV no matter the social structure.
+        """,
     // "image": "assets/images/4.png"
   },
   {
@@ -30,4 +43,3 @@ List items = [
     // "image": "assets/images/5.png"
   }
 ];
-

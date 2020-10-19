@@ -124,6 +124,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.jmbonline.co.za'
+EMAIL_HOST_USER = 'support@jmbonline.co.za'
+EMAIL_HOST_PASSWORD = 'Supp0rt@Jmb!'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'fetchme@qaphela.com'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
