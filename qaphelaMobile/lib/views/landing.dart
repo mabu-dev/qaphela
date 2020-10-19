@@ -36,8 +36,10 @@ final searchScaffoldKey = GlobalKey<ScaffoldState>();
 class MyCustomFormState extends State<MyCustomForm> {
   MyApi api = MyApi();
   Mode _mode = Mode.overlay;
+  bool loading = false;
+  String postError;
 // Map<String, dynamic> data = new Map<String, dynamic>();
-  FetchMe fetch = new FetchMe();
+  FetchMe fetch;
   Map<String, dynamic> fetchMe = new Map<String, dynamic>();
   Map<String, dynamic> contact = new Map<String, dynamic>();
   Map<String, dynamic> address = new Map<String, dynamic>();
@@ -97,24 +99,87 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
 
   void handleInput(Key id, String value) {
-   
     String identifier = id.toString().split('\'')[1];
 
     fetchMe[identifier] = value;
   }
-  
 
   void handleAddress(Key id, String value) {
-   
-
     String identifier = id.toString().split('\'')[1];
     contact[identifier] = value;
   }
-  
 
   void handleDate(DateTime value) {
-    
     fetchMe['pickup_time'] = value.toString();
+  }
+
+  void sendRequest(Map<String, dynamic> data) async {
+    try {
+      FetchMe response = await api.fetchMeRequest(data);
+
+      setState(() => {fetch: response, loading: false});
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(" Request Success Created"),
+            // Retrieve the text which the user has entered by
+            // using the TextEditingController.
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                  Text('Request Status: ${fetch.incidentStatus}',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.orangeAccent,
+                          fontWeight: FontWeight.w400)),
+                  Text(
+                    'Please keep safe ${fetch.victimFullNames}, \n we will give you further directions on your case',
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  )
+                  // edit == true?:
+                ]),
+            actions: <Widget>[
+              new FlatButton(
+                  child: new Text('Ok'),
+                  onPressed: () {
+                    // setState(() {
+                    //   edit = !edit;
+                    // });
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        },
+      );
+    } catch (e) {
+       print('sendRequest error: ${e.toString()}');
+
+      setState(() => {loading: false, postError: e.toString()});
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(" Request Failed"),
+            // Retrieve the text which the user has entered by
+            // using the TextEditingController.
+            content: Text('Please try Again'),
+            actions: <Widget>[
+              new FlatButton(
+                  child: new Text('Ok'),
+                  onPressed: () {
+                    // setState(() {
+                    //   edit = !edit;
+                    // });
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        },
+      );
+     
+    }
   }
 
   final format = DateFormat("yyyy-MM-dd HH:mm");
@@ -161,140 +226,140 @@ class MyCustomFormState extends State<MyCustomForm> {
                   Colors.yellow[50],
                   Colors.lightGreen[50],
                 ])),
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                  // direction: Axis.vertical,
-                  children: [
-                    Container(
-                        alignment: Alignment(-1.0, -1.0),
-                        margin: EdgeInsets.only(top: 12.0),
-                        child: CaseEditText(
-                            key: Key('victim_full_names'),
-                            title: 'Name',
-                            text: 'Enter your full name',
-                            onChange: handleInput,
-                            inputType: TextInputType.name)),
-                    Container(
-                        alignment: Alignment(-1.0, -1.0),
-                        margin: EdgeInsets.only(top: 12.0),
-                        child: CaseEditText(
-                        key: Key('primary_contact_number'),
-                            title: 'Contact Number',
-                            text: 'Enter your cell phone number',
-                            onChange: handleAddress,
-                            inputType: TextInputType.phone)),
-                    Container(
-                        alignment: Alignment(-1.0, -1.0),
-                        margin: EdgeInsets.only(top: 12.0),
-                        child: CaseEditText(
-                        key: Key('next_of_kin_firstname'),
-                            title: 'Next Of Kin Name',
-                            text: 'Next of kin name',
-                            onChange: handleAddress,
-                            inputType: TextInputType.name)),
-                    Container(
-                        alignment: Alignment(-1.0, -1.0),
-                        margin: EdgeInsets.only(top: 12.0),
-                        child: CaseEditText(
-                        key: Key('next_of_kin_lastname'),
-                            title: 'Next Of Kin last',
-                            text: 'Next of kin last name',
-                            onChange: handleAddress,
-                            inputType: TextInputType.name)),
-                    Container(
-                        alignment: Alignment(-1.0, -1.0),
-                        margin: EdgeInsets.only(top: 12.0),
-                        child: CaseEditText(
-                        key: Key('next_of_kin_primary_contact_number'),
-                            title: 'Next Of Kin Cellphone',
-                            text: 'Next of kin Cellphone',
-                            onChange: handleAddress,
-                            inputType: TextInputType.phone)),
-                    Container(
-                      alignment: Alignment(-1.0, -1.0),
-                      margin: EdgeInsets.only(top: 12.0),
-                      child: DateTimeField(
-                          onChanged: (value) => handleDate(value),
-                          format: format,
-                          onShowPicker: (context, currentValue) async {
-                            final date = await showDatePicker(
-                                context: context,
-                                firstDate: DateTime(2020),
-                                initialDate: currentValue ?? DateTime.now(),
-                                lastDate: DateTime(2022));
-
-                            if (date != null) {
-                              final time = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.fromDateTime(
-                                    currentValue ?? DateTime.now()),
-                              );
-                              return DateTimeField.combine(date, time);
-                            } else {
-                              return currentValue;
-                            }
-                          },
-                          decoration: InputDecoration(
-                              // id: id,
-                              labelText: 'FetchMe Time',
-                              border: OutlineInputBorder(),
-                              fillColor: Color(0xfff3f3f4),
-                              filled: true)),
+            child: loading == true
+                ? Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.greenAccent,
+                      strokeWidth: 2,
                     ),
-                    Container(
-                        alignment: Alignment(-1.0, -1.0),
-                        margin: EdgeInsets.only(top: 12.0),
-                        child: CaseEditText(
-                            key: Key('incident_type'),
-                            title: 'Note',
-                            text: 'Enter other information relevant',
-                            onChange: handleInput,
-                            inputType: TextInputType.multiline)),
-                    Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        // _buildDropdownMenu(),
-                        MaterialButton(
-                          color: Colors.orangeAccent,
-                          onPressed: _handlePressButton,
-                          child: Text("Search Your Address"),
-                        ),
-                      ],
-                    )),
-                    Padding(padding: EdgeInsets.only(bottom: 24)),
-                    Center(
-                        child: Material(
-                      elevation: 5,
-                      color: Colors.greenAccent,
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: MaterialButton(
-                        onPressed: () {
+                  )
+                : Form(
+                    key: _formKey,
+                    child: ListView(
+                        // direction: Axis.vertical,
+                        children: [
+                          Container(
+                              alignment: Alignment(-1.0, -1.0),
+                              margin: EdgeInsets.only(top: 12.0),
+                              child: CaseEditText(
+                                  key: Key('victim_full_names'),
+                                  title: 'Name',
+                                  text: 'Enter your full name',
+                                  onChange: handleInput,
+                                  inputType: TextInputType.name)),
+                          Container(
+                              alignment: Alignment(-1.0, -1.0),
+                              margin: EdgeInsets.only(top: 12.0),
+                              child: CaseEditText(
+                                  key: Key('primary_contact_number'),
+                                  title: 'Contact Number',
+                                  text: 'Enter your cell phone number',
+                                  onChange: handleAddress,
+                                  inputType: TextInputType.phone)),
+                          Container(
+                              alignment: Alignment(-1.0, -1.0),
+                              margin: EdgeInsets.only(top: 12.0),
+                              child: CaseEditText(
+                                  key: Key('next_of_kin_firstname'),
+                                  title: 'Next Of Kin Name',
+                                  text: 'Next of kin name',
+                                  onChange: handleAddress,
+                                  inputType: TextInputType.name)),
+                          Container(
+                              alignment: Alignment(-1.0, -1.0),
+                              margin: EdgeInsets.only(top: 12.0),
+                              child: CaseEditText(
+                                  key: Key('next_of_kin_lastname'),
+                                  title: 'Next Of Kin last',
+                                  text: 'Next of kin last name',
+                                  onChange: handleAddress,
+                                  inputType: TextInputType.name)),
+                          Container(
+                              alignment: Alignment(-1.0, -1.0),
+                              margin: EdgeInsets.only(top: 12.0),
+                              child: CaseEditText(
+                                  key:
+                                      Key('next_of_kin_primary_contact_number'),
+                                  title: 'Next Of Kin Cellphone',
+                                  text: 'Next of kin Cellphone',
+                                  onChange: handleAddress,
+                                  inputType: TextInputType.phone)),
+                          Container(
+                            alignment: Alignment(-1.0, -1.0),
+                            margin: EdgeInsets.only(top: 12.0),
+                            child: DateTimeField(
+                                onChanged: (value) => handleDate(value),
+                                format: format,
+                                onShowPicker: (context, currentValue) async {
+                                  final date = await showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(2020),
+                                      initialDate:
+                                          currentValue ?? DateTime.now(),
+                                      lastDate: DateTime(2022));
 
-                          fetchMe['pickup_address'] = address;
-                          fetchMe['contact_details'] = contact;
-                          fetchMe['incident_type'] = 'SCHEDULE';
+                                  if (date != null) {
+                                    final time = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.fromDateTime(
+                                          currentValue ?? DateTime.now()),
+                                    );
+                                    return DateTimeField.combine(date, time);
+                                  } else {
+                                    return currentValue;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    // id: id,
+                                    labelText: 'FetchMe Time',
+                                    border: OutlineInputBorder(),
+                                    fillColor: Color(0xfff3f3f4),
+                                    filled: true)),
+                          ),
+                          Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              // _buildDropdownMenu(),
+                              MaterialButton(
+                                color: Colors.orangeAccent,
+                                onPressed: _handlePressButton,
+                                child: Text("Search Your Address"),
+                              ),
+                            ],
+                          )),
+                          Padding(padding: EdgeInsets.only(bottom: 24)),
+                          Center(
+                              child: Material(
+                            elevation: 5,
+                            color: Colors.greenAccent,
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: MaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  loading = true;
+                                });
+                                fetchMe['pickup_address'] = address;
+                                fetchMe['contact_details'] = contact;
+                                fetchMe['incident_type'] = 'SCHEDULE';
 
-                          // fetch= FetchMe.fromJson(fetchMe);
+                                print(
+                                    '________ fetchMe : ${fetchMe.toString()}');
 
-                          // print('******** address ad: ${fetch.pickupAddress.toJson().toString()}');
-                          // print('++++++++ contact : ${fetch.contactDetails.toJson().toString()}');
-                          print('________ fetchMe : ${fetchMe.toString()}');
-                            api.fetchMeRequest(fetchMe);
-
-                        },
-                        minWidth: 200.0,
-                        height: 8.0,
-                        child: Text(
-                          "Schedule FetchMe",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 16.0),
-                        ),
-                      ),
-                    )),
-                  ]),
-            )));
+                                sendRequest(fetchMe);
+                              },
+                              minWidth: 200.0,
+                              height: 8.0,
+                              child: Text(
+                                "Schedule FetchMe",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0),
+                              ),
+                            ),
+                          )),
+                        ]),
+                  )));
   }
 }
 

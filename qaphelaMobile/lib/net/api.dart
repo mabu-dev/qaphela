@@ -36,16 +36,18 @@ class MyApi {
     List<dynamic> cases = json.decode(res.body);
     return cases.map((i) => CheckCase.fromJson(i)).toList();
   }
-  Future<dynamic> fetchMeRequest(Map<String, dynamic> updatedCase) async {
+
+  Future<FetchMe> fetchMeRequest(Map<String, dynamic> updatedCase) async {
     final caseUrl = baseUrl + 'fetchme/';
-    http.Response res =
-        await http.post(caseUrl, headers: _setHeaders(), body: json.encode(updatedCase));
-        print('________ res.body : ${json.decode(res.body)}');
-    //  dynamic case = json.decode(res.body);
-    //  return case;
+    http.Response res = await http.post(caseUrl,
+        headers: _setHeaders(), body: json.encode(updatedCase));
+
+      return FetchMe.fromJson(json.decode(res.body));
+      
   }
 
   Map<String, String> _setHeaders() => <String, String>{
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       };
 }
