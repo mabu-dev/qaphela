@@ -24,7 +24,7 @@ class MyBlinkingButton extends StatefulWidget {
         opacity: _animationController,
         child: MaterialButton(
           onPressed: () => null,
-          child: Text("Emergency"),
+          child: Text("Now"),
           color: Colors.orangeAccent,
         ),
       );

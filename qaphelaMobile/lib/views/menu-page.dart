@@ -210,7 +210,7 @@ class MyMenu extends StatelessWidget {
                                 Navigator.popAndPushNamed(context, '/fetchMe'),
                                 // showForm(event),
                                 },
-                              child: Text("Plan Escape"),
+                              child: Text("Schedule"),
                               color: Colors.greenAccent,
                             ),
                           ),

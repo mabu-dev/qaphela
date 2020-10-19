@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:qaphelaMobile/model/fetch-me.dart';
 import 'package:qaphelaMobile/shared/widgets/case-edittext.dart';
 import 'package:qaphelaMobile/shared/widgets/utils.dart';
 
@@ -11,19 +13,15 @@ class MyCustomForm extends StatefulWidget {
 
 // Create a corresponding State class, which holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
-  Map<String, String> fetchMe = {
-    "lon": "",
-    "lat": "",
-    "phoneNumber": "",
-    "name": ""
-  };
+  FetchMe fetchMe = new FetchMe();
 
   final _formKey = GlobalKey<FormState>();
 
-  Function handleInput() {
-    // setState((value) {
-    //                   fetchMe['name'] = value;
-    //                 }
+  void handleInput(Key id, String value) {
+    print('handleInput id : ${id.toString().split('\'')[1]}');
+    print('handleInput fetchMe : ${fetchMe.toJson()}');
+    String identifier = id.toString().split('\'')[1];
+    fetchMe.toJson()[identifier] = value;
   }
 
   @override
@@ -43,21 +41,11 @@ class MyCustomFormState extends State<MyCustomForm> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             iconSize: MediaQuery.of(context).size.width * 0.08,
-            color: Colors.white,
+            color: Colors.black,
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.of(context).pop();
             },
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.power_settings_new),
-              iconSize: 36.0,
-              color: Colors.black,
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
-            ),
-          ],
         ),
         extendBodyBehindAppBar: false,
         body: Container(
@@ -83,39 +71,67 @@ class MyCustomFormState extends State<MyCustomForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  CaseEditText(
-                      title: 'Name',
-                      text: 'Enter your full name',
-                      onChange: handleInput),
-                  CaseEditText(
-                      title: 'Contact Number',
-                      text: 'Enter your cell phone number',
-                      onChange: handleInput),
-                  CaseEditText(
-                      title: 'FetchMe Date',
-                      text: 'Enter the date you want to be fetched on',
-                      onChange: handleInput),
-                  CaseEditText(
-                      title: 'FetchMe Time',
-                      text: 'Enter the time you want to be fetched at',
-                      onChange: handleInput),
-                  CaseEditText(
-                      title: 'Note',
-                      text: 'Enter other information relevant',
-                      onChange: handleInput),
+                  Container(
+                      alignment: Alignment(-1.0, -1.0),
+                      margin: EdgeInsets.only(top: 12.0),
+                      child: CaseEditText(
+                          key: Key('victimFullNames'),
+                          title: 'Name',
+                          text: 'Enter your full name',
+                          onChange: handleInput,
+                          inputType: TextInputType.name)),
+                  Container(
+                      alignment: Alignment(-1.0, -1.0),
+                      margin: EdgeInsets.only(top: 12.0),
+                      child: CaseEditText(
+                          title: 'Contact Number',
+                          text: 'Enter your cell phone number',
+                          onChange: handleInput,
+                          inputType: TextInputType.phone)),
+                  Container(
+                      alignment: Alignment(-1.0, -1.0),
+                      margin: EdgeInsets.only(top: 12.0),
+                      child: CaseEditText(
+                          key: Key('pickupTime'),
+                          title: 'FetchMe Date',
+                          text: 'Enter the date you want to be fetched on',
+                          onChange: handleInput,
+                          inputType: TextInputType.datetime)),
+                  Container(
+                      alignment: Alignment(-1.0, -1.0),
+                      margin: EdgeInsets.only(top: 12.0),
+                      child: CaseEditText(
+                          title: 'FetchMe Time',
+                          text: 'Enter the time you want to be fetched at',
+                          onChange: handleInput,
+                          inputType: TextInputType.datetime)),
+                  Container(
+                      alignment: Alignment(-1.0, -1.0),
+                      margin: EdgeInsets.only(top: 12.0),
+                      child: CaseEditText(
+                          key: Key('incidentType'),
+                          title: 'Note',
+                          text: 'Enter other information relevant',
+                          onChange: handleInput,
+                          inputType: TextInputType.multiline)),
+                  Text(
+                    "FetchMe Address",
+                    style:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0),
+                  ),
                   Material(
                     elevation: 5,
                     color: Colors.greenAccent,
                     borderRadius: BorderRadius.circular(12.0),
                     child: MaterialButton(
                       onPressed: () {
-                          // It returns true if the form is valid, otherwise returns false
-                          if (_formKey.currentState.validate()) {
-                            // If the form is valid, display a Snackbar.
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text('Data is in processing.')));
-                          }
-                        },
+                        // It returns true if the form is valid, otherwise returns false
+                        if (_formKey.currentState.validate()) {
+                          // If the form is valid, display a Snackbar.
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text('Data is in processing.')));
+                        }
+                      },
                       minWidth: 200.0,
                       height: 8.0,
                       child: Text(
@@ -125,7 +141,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ),
                     ),
                   ),
-                  
                 ],
               ),
             )));

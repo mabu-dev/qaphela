@@ -114,49 +114,48 @@ class _CaseDetailsState extends State<CaseDetails> {
         child: Column(
           children: <Widget>[
             Container(
-              alignment: Alignment.center,
-              child:Row(
-                children: <Widget>[
+                alignment: Alignment.center,
+                child: Row(children: <Widget>[
                   Card(
-                    color: Colors.green[50],
-                    elevation: 4,
-                    shadowColor: Colors.orangeAccent[100],
-                    child: SizedBox(
-                        height: 90,
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        // child: Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Text("Complainant",
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.orange,
-                                    )),
-                                Row(
-                                  children: [
-                                    widget.checkCase.reporter.imageurl != null
-                                        ? Image.network(
-                                            widget.checkCase.reporter.imageurl)
-                                        : Icon(
-                                            Icons.person,
-                                            color: Colors.orangeAccent,
-                                            size: 50,
-                                            semanticLabel:
-                                                'Text to announce in accessibility modes',
-                                          ),
-                                    Column(children: [
-                                      Text(widget
-                                          .checkCase.reporter.user.firstName),
-                                      Text(widget
-                                          .checkCase.reporter.user.lastName),
-                                    ])
-                                  ],
-                                ),
-                              ],
-                            )))),
+                      color: Colors.green[50],
+                      elevation: 4,
+                      shadowColor: Colors.orangeAccent[100],
+                      child: SizedBox(
+                          height: 90,
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          // child: Expanded(
+                          child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text("Complainant",
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w200,
+                                        color: Colors.orange,
+                                      )),
+                                  Row(
+                                    children: [
+                                      widget.checkCase.reporter.imageurl != null
+                                          ? Image.network(widget
+                                              .checkCase.reporter.imageurl)
+                                          : Icon(
+                                              Icons.person,
+                                              color: Colors.orangeAccent,
+                                              size: 50,
+                                              semanticLabel:
+                                                  'Text to announce in accessibility modes',
+                                            ),
+                                      Column(children: [
+                                        Text(widget
+                                            .checkCase.reporter.user.firstName),
+                                        Text(widget
+                                            .checkCase.reporter.user.lastName),
+                                      ])
+                                    ],
+                                  ),
+                                ],
+                              )))),
                   Padding(padding: EdgeInsets.only(right: 1)),
                   Card(
                     color: Colors.green[50],
@@ -183,8 +182,8 @@ class _CaseDetailsState extends State<CaseDetails> {
                                   color: Colors.black45,
                                 )),
                             Text(
-                                widget
-                                    .checkCase.reporter.socialProfiles.profilePage,
+                                widget.checkCase.reporter.socialProfiles
+                                    .profilePage,
                                 style: const TextStyle(
                                   fontSize: 14.0,
                                   color: Colors.black45,
@@ -197,11 +196,10 @@ class _CaseDetailsState extends State<CaseDetails> {
                       ),
                     ),
                   )
-                ]
-              )
-            ),
+                ])),
             SingleChildScrollView(
-              child: Column(
+              child: Form(
+                  child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -267,7 +265,7 @@ class _CaseDetailsState extends State<CaseDetails> {
                         : null,
                   )
                 ],
-              ),
+              )),
             ),
           ],
         ),
