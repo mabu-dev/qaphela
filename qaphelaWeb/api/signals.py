@@ -2,7 +2,7 @@ from django.core.signals import request_finished
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from api import models
-
+import os
 from requests.exceptions import HTTPError
 # from onesignalclient.app_client import OneSignalAppClient
 # from onesignalclient.notification import Notification
@@ -15,6 +15,9 @@ def broadcastFetchMe(sender, **kwargs):
     incident = models.FetchMeIncident.objects.get(id=target_object.id)
     print(
         f"Victim: {incident.victim_full_names} \nLocation: {incident.pickup_address.address}")
+
+    # os.system(
+    #     f'say "Fetch Me Incident for {incident.victim_full_names}"')
 
     # if update_fields:
     #     status = target_object.status

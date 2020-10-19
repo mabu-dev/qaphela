@@ -2,6 +2,8 @@ from api import serializers, models
 from django.shortcuts import render
 from rest_framework.permissions import AllowAny
 from rest_framework import generics
+from rest_framework.response import Response
+from django.forms.models import model_to_dict
 
 
 class User(generics.RetrieveUpdateAPIView):
@@ -40,12 +42,47 @@ class Case(generics.RetrieveUpdateAPIView):
     queryset = models.Case.objects.all()
 
 
-class FetchMe(generics.RetrieveUpdateAPIView):
+class FetchMeIncident(generics.RetrieveUpdateAPIView):
     # authentication_class = (JSONWebTokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
     serializer_class = serializers.FetchMeSerializer
     queryset = models.FetchMeIncident.objects.all()
+
+
+class FetchMeIncidents(generics.ListCreateAPIView):
+    # authentication_class = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.FetchMeSerializer
+
+    def get_queryset(self):
+        queryset = models.FetchMeIncident.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        validated_data = request.data
+        pickup_address = validated_data.pop('pickup_address')
+        contact_details = validated_data.pop('contact_details')
+        pickup_address = models.Address.objects.get_or_create(
+            **pickup_address)[0]
+        contact_details = models.ContactDetails.objects.get_or_create(
+            **contact_details)[0]
+
+        incident = models.FetchMeIncident.objects.create(
+            pickup_address=pickup_address,
+            contact_details=contact_details,
+            **validated_data
+        )
+        incident = model_to_dict(incident)
+        pickup_address = model_to_dict(pickup_address)
+        pickup_address.pop("id")
+        incident['pickup_address'] = pickup_address
+        incident['contact_details'] = model_to_dict(contact_details)
+        print("*" * 10)
+        print(incident)
+
+        return Response(incident)
 
 
 class Abusers(generics.ListCreateAPIView):
