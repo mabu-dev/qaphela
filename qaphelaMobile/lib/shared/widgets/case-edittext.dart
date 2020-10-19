@@ -23,7 +23,7 @@ class CaseEditText extends StatelessWidget {
         enabled: editable,
         minLines: 1,
         maxLines: 10,
-        controller: TextEditingController(text: text),
+        // controller: TextEditingController(text: text),
         onChanged: (value) => onChange(key,value),
         decoration: InputDecoration(
           // id: id,

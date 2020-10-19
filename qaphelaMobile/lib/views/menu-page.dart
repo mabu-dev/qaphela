@@ -207,7 +207,7 @@ class MyMenu extends StatelessWidget {
                             child: MaterialButton(
                               onPressed: () => {
                                 Navigator.of(context).pop(),
-                                Navigator.popAndPushNamed(context, '/fetchMe'),
+                                Navigator.pushNamed(context, '/fetchMe'),
                                 // showForm(event),
                                 },
                               child: Text("Schedule"),
@@ -239,7 +239,7 @@ class MyMenu extends StatelessWidget {
     }
   }
 
-  LatLng _initialcameraposition = LatLng(27.944183, -26.259960);
+  LatLng _initialcameraposition = LatLng( -26.259960,27.944183);
   GoogleMapController _controller;
   Location _location = Location();
 
@@ -264,7 +264,7 @@ class MyMenu extends StatelessWidget {
           children: [
             GoogleMap(
               initialCameraPosition:
-                  CameraPosition(target: _initialcameraposition),
+                  CameraPosition(target: _initialcameraposition, zoom: 10),
               mapType: MapType.normal,
               // onMapCreated: _onMapCreated,
               myLocationEnabled: true,

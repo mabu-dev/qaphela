@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:qaphelaMobile/model/checkCase.dart';
+import 'package:qaphelaMobile/model/fetch-me.dart';
 import 'package:qaphelaMobile/model/perpetrator.dart';
 
 class MyApi {
@@ -29,14 +30,23 @@ class MyApi {
   }
 
   Future<List<CheckCase>> updateCase(CheckCase updatedCase) async {
-    final caseUrl = baseUrl + 'api/case/${updatedCase.id}/';
+    final caseUrl = baseUrl + 'case/${updatedCase.id}/';
     http.Response res =
         await http.post(caseUrl, headers: _setHeaders(), body: updatedCase);
     List<dynamic> cases = json.decode(res.body);
     return cases.map((i) => CheckCase.fromJson(i)).toList();
   }
 
+  Future<dynamic> fetchMeRequest(Map<String, dynamic> updatedCase) async {
+    final caseUrl = baseUrl + 'fetchme/';
+    http.Response res = await http.post(caseUrl,
+        headers: _setHeaders(), body: json.encode(updatedCase));
+    print('________ res.body : ${json.decode(res.body)}');
+    //  dynamic case = json.decode(res.body);
+    //  return case;
+  }
+
   Map<String, String> _setHeaders() => <String, String>{
-        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       };
 }
