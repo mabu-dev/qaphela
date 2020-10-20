@@ -122,10 +122,10 @@ const SearchIconData = Icon(
 );
 
 const SearchBarDecoration = const InputDecoration(
-  prefixIcon: SearchIconData,
+  prefixIcon: Icon(Icons.search),
   prefixStyle: PreFixTextStyle,
   border: InputBorder.none,
-  hintText: 'Search',
+  hintText: 'Search by name or image',
   hintStyle: HintTextStyle,
 );
 

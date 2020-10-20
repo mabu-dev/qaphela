@@ -1,7 +1,7 @@
 import 'package:qaphelaMobile/model/contactDetails.dart';
 import 'package:qaphelaMobile/model/pick-up-address.dart';
 import 'package:qaphelaMobile/model/user.dart';
-
+import 'package:intl/intl.dart';
 class FetchMe {
   List<User> responders;
   PickupAddress pickupAddress;
@@ -21,6 +21,7 @@ class FetchMe {
       this.victimFullNames});
 
   FetchMe.fromJson(Map<String, dynamic> json) {
+    DateFormat format = DateFormat("yyyy-MM-dd HH:mm");
     if (json['responders'] != null) {
       responders = new List<User>();
       json['responders'].forEach((v) {
@@ -35,7 +36,7 @@ class FetchMe {
         : null;
     incidentType = json['incident_type'];
     incidentStatus = json['incident_status'];
-    pickupTime = json['pickup_time'];
+    pickupTime = format.parse(json['pickup_time']);
     victimFullNames = json['victim_full_names'];
   }
 

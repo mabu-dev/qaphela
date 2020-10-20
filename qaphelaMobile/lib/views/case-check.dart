@@ -126,7 +126,31 @@ class _CaseCheckScreen extends State<CaseCheckScreen>
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
-                              controller: _textEditingController,
+                              onChanged: (value) => {
+                                    setState(() {
+                                      print('onChanged value: $value');
+                                      searchString = value;
+                                    }),
+                                  },
+                              onTap: () async => {
+                                   if(searchString!=null){ 
+                                     response =
+                                        await api.getAbuser(searchString),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return PerpetratorDetails(
+                                            fullNames: response[0]
+                                                .perpetrators
+                                                .fullNames,
+                                          );
+                                        },
+                                      ),
+                                    ),}
+                                  },
+
+                              // controller: _textEditingController,
                               onSubmitted: (text) {
                                 value = text;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:qaphelaMobile/model/address.dart';
 import 'package:qaphelaMobile/model/contactDetails.dart';
@@ -38,29 +39,11 @@ class MyCustomFormState extends State<MyCustomForm> {
   Mode _mode = Mode.overlay;
   bool loading = false;
   String postError;
-// Map<String, dynamic> data = new Map<String, dynamic>();
   FetchMe fetch;
   Map<String, dynamic> fetchMe = new Map<String, dynamic>();
   Map<String, dynamic> contact = new Map<String, dynamic>();
   Map<String, dynamic> address = new Map<String, dynamic>();
-  Widget _buildDropdownMenu() => DropdownButton(
-        value: _mode,
-        items: <DropdownMenuItem<Mode>>[
-          DropdownMenuItem<Mode>(
-            child: Text("Overlay"),
-            value: Mode.overlay,
-          ),
-          DropdownMenuItem<Mode>(
-            child: Text("Fullscreen"),
-            value: Mode.fullscreen,
-          ),
-        ],
-        onChanged: (m) {
-          setState(() {
-            _mode = m;
-          });
-        },
-      );
+
 
   void onError(PlacesAutocompleteResponse response) {
     homeScaffoldKey.currentState.showSnackBar(
@@ -116,37 +99,41 @@ class MyCustomFormState extends State<MyCustomForm> {
   void sendRequest(Map<String, dynamic> data) async {
     try {
       FetchMe response = await api.fetchMeRequest(data);
-
-      setState(() => {fetch: response, loading: false});
+      setState(() => {fetch = response, loading = false});
 
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(" Request Success Created"),
-            // Retrieve the text which the user has entered by
-            // using the TextEditingController.
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
+            title: Center(
+                child: Text(
+              " Request Success Created",
+              style: TextStyle(color: Colors.green),
+            )),
+            
+            content: Container(
+                height: 100,
+                child: Center(
+                    child: Column(children: <Widget>[
                   Text('Request Status: ${fetch.incidentStatus}',
                       style: TextStyle(
                           fontSize: 14,
-                          color: Colors.orangeAccent,
+                          color: Colors.black,
                           fontWeight: FontWeight.w400)),
-                  Text(
-                    'Please keep safe ${fetch.victimFullNames}, \n we will give you further directions on your case',
-                    style: TextStyle(fontSize: 18, color: Colors.black),
-                  )
-                  // edit == true?:
-                ]),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 18),
+                  ),
+                  Center(
+                      child: Text(
+                    'Please keep safe ${fetch.victimFullNames},\nwe will give you further directions on your case',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ))
+                ]))),
             actions: <Widget>[
               new FlatButton(
                   child: new Text('Ok'),
                   onPressed: () {
-                    // setState(() {
-                    //   edit = !edit;
-                    // });
+                   
                     Navigator.of(context).pop();
                   })
             ],
@@ -154,31 +141,28 @@ class MyCustomFormState extends State<MyCustomForm> {
         },
       );
     } catch (e) {
-       print('sendRequest error: ${e.toString()}');
 
       setState(() => {loading: false, postError: e.toString()});
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(" Request Failed"),
-            // Retrieve the text which the user has entered by
-            // using the TextEditingController.
-            content: Text('Please try Again'),
+            title: Center(child: Text(" Request Failed", style: TextStyle(color:Colors.orange))),
+
+            content: Container( height:40, child:Center(child: Text('Please ensure that all fields are filled out and try Again'))),
             actions: <Widget>[
               new FlatButton(
                   child: new Text('Ok'),
                   onPressed: () {
-                    // setState(() {
-                    //   edit = !edit;
-                    // });
+                    setState(()=> {
+                      loading = false
+                    });
                     Navigator.of(context).pop();
                   })
             ],
           );
         },
       );
-     
     }
   }
 
@@ -316,18 +300,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     fillColor: Color(0xfff3f3f4),
                                     filled: true)),
                           ),
-                          Center(
-                              child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              // _buildDropdownMenu(),
-                              MaterialButton(
+                          Center(child:Container(
+                            padding: EdgeInsets.fromLTRB(4, 16, 4, 16),
+                              width: MediaQuery.of(context).size.width*0.8,
+                              child: MaterialButton(
                                 color: Colors.orangeAccent,
                                 onPressed: _handlePressButton,
-                                child: Text("Search Your Address"),
-                              ),
-                            ],
-                          )),
+                                child: Text("Search Your Address", style:TextStyle(fontWeight: FontWeight.w300),)))),
                           Padding(padding: EdgeInsets.only(bottom: 24)),
                           Center(
                               child: Material(
@@ -342,9 +321,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                                 fetchMe['pickup_address'] = address;
                                 fetchMe['contact_details'] = contact;
                                 fetchMe['incident_type'] = 'SCHEDULE';
-
-                                print(
-                                    '________ fetchMe : ${fetchMe.toString()}');
 
                                 sendRequest(fetchMe);
                               },

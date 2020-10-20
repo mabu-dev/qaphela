@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:qaphelaMobile/model/checkCase.dart';
 import 'package:qaphelaMobile/model/fetch-me.dart';
 import 'package:qaphelaMobile/model/perpetrator.dart';
 
 class MyApi {
-  static final domain = '192.168.8.104';
-  static final baseUrl = "http://$domain:8001/api/";
+  static final domain = '192.168.8.102';
+  static final baseUrl = "http://$domain:8000/api/";
 
   Future<List<CheckCase>> getCases() async {
     final url = baseUrl + 'cases/';
@@ -38,12 +39,18 @@ class MyApi {
   }
 
   Future<FetchMe> fetchMeRequest(Map<String, dynamic> updatedCase) async {
-    final caseUrl = baseUrl + 'fetchme/';
-    http.Response res = await http.post(caseUrl,
-        headers: _setHeaders(), body: json.encode(updatedCase));
+    Map<String, dynamic> t;
+    try {
+      final caseUrl = baseUrl + 'fetchme/';
+      http.Response res = await http.post(caseUrl,
+          headers: _setHeaders(), body: json.encode(updatedCase));
 
-      return FetchMe.fromJson(json.decode(res.body));
-      
+      t = json.decode(res.body);
+
+    } catch (e) {
+      HttpException(e.toString());
+    }
+    return FetchMe.fromJson(t);
   }
 
   Map<String, String> _setHeaders() => <String, String>{

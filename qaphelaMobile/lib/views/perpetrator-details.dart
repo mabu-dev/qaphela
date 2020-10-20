@@ -41,6 +41,7 @@ class _PerpetratorDetailsState extends State<PerpetratorDetails> {
           SliverAppBar(
             backgroundColor: Colors.green[50],
             expandedHeight: 200.0,
+            brightness: Brightness.dark,
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
